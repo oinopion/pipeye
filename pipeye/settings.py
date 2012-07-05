@@ -68,6 +68,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
+    'social_auth',
 )
 
 TEST_RUNNER = 'discover_runner.DiscoverRunner'
@@ -97,3 +98,12 @@ LOGGING = {
         },
     }
 }
+
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.contrib.github.GithubBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+GITHUB_APP_ID = environ.get('GITHUB_APP_ID')
+GITHUB_API_SECRET = environ.get('GITHUB_API_SECRET')
+
