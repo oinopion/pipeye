@@ -1,12 +1,11 @@
 Django==1.4
+South==0.7.5
+django-discover-runner==0.2
 django-social-auth==0.7.0
 httplib2==0.7.4
-ipdb==0.6.1
+hurl==1.0
 ipython==0.13
-nose==1.1.2
 oauth2==1.5.211
 psycopg2==2.4.5
 python-openid==2.2.5
-sure==0.10.3
-unclebob==0.3.7
 wsgiref==0.1.2

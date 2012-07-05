@@ -12,7 +12,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '',
+        'NAME': 'db.sqlite',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -20,7 +20,7 @@ DATABASES = {
     }
 }
 
-# SITE_ID = 1
+SITE_ID = 1
 
 LANGUAGE_CODE = 'en-us'
 USE_I18N = True
@@ -65,10 +65,13 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'south',
 )
+
+TEST_RUNNER = 'discover_runner.DiscoverRunner'
+TEST_DISCOVER_TOP_LEVEL = ROOT
 
 # A sample logging configuration.
 LOGGING = {
