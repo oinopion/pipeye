@@ -1,11 +1,33 @@
 <!DOCTYPE html>
+{% load compress %}
 <html>
 <head>
-    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeye</title>
+    {% compress css %}
+        <link href="{{ STATIC_URL }}css/vendor/bootstrap-2.0.4.css"
+              rel="stylesheet">
+    {% endcompress %}
 </head>
 <body>
-{% block content %}
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">Pipeye</a>
+            <ul class="nav">
+                <li><a href="/">Home</a></li>
+            </ul>
+            <ul class="nav pull-right">
+                <li><a href="/">Login with GitHub</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-{% endblock %}
+<div class='container'>
+    {% block content %}
+    {% endblock %}
+</div>
 </body>
 </html>

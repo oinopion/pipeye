@@ -1,5 +1,5 @@
-from django.conf.urls import patterns, include, url
+import hurl
 
-urlpatterns = patterns('',
-    url(r'', include('social_auth.urls')),
-)
+urlpatterns = hurl.urlpatterns('', {
+    '': 'pipeye.views.home',
+})
