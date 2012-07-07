@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% load url from future %}
+
+{% block content %}
+    {{ user }}
+    <a href="{% url 'socialauth_begin' 'github' %}">Login with github</a>
+{% endblock %}
