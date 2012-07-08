@@ -1,5 +1,7 @@
 # Django settings for pipeye project.
 from os import path, environ
+from django.core.urlresolvers import reverse_lazy
+
 ROOT = path.dirname(path.dirname(__file__))
 
 DEBUG = environ.get('DEBUG', False)
@@ -70,6 +72,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'compressor',
+    'social_auth',
 )
 
 COMPRESS_OUTPUT_DIR = 'cache'
@@ -83,6 +86,15 @@ COMPRESS_PRECOMPILERS = [
     ('text/x-sass', 'sass {infile} {outfile}'),
 ]
 
+LOGIN_URL = reverse_lazy('login')
+LOGIN_REDIRECT_URL = reverse_lazy('home')
+SOCIAL_AUTH_COMPLETE_URL_NAME = 'login_complete'
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.contrib.github.GithubBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+GITHUB_APP_ID = environ.get('GITHUB_APP_ID')
+GITHUB_API_SECRET = environ.get('GITHUB_API_SECRET')
 
 TEST_RUNNER = 'discover_runner.DiscoverRunner'
 TEST_DISCOVER_TOP_LEVEL = ROOT
@@ -116,7 +128,4 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.github.GithubBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-
-GITHUB_APP_ID = environ.get('GITHUB_APP_ID')
-GITHUB_API_SECRET = environ.get('GITHUB_API_SECRET')
 

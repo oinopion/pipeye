@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load compress %}
+{% load url from future %}
 <html>
 <head>
     <meta charset="utf-8">
@@ -19,7 +20,11 @@
                 <li><a href="/">Home</a></li>
             </ul>
             <ul class="nav pull-right">
-                <li><a href="/">Login with GitHub</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="/">{{ user.username }}</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login with GitHub</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
