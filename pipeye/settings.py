@@ -14,11 +14,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
+        'NAME': '/tmp/pipeye.db',
     }
 }
 
@@ -71,8 +67,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
+    'gunicorn',
     'compressor',
     'social_auth',
+    'pipeye.packages',
 )
 
 COMPRESS_OUTPUT_DIR = 'cache'
