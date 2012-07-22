@@ -35,11 +35,9 @@ class Importer(object):
         """Saves all packages names"""
         saved = self.manager.all_package_names()
         incoming = self.client.list_packages()
-        created = 0
-        for package in missing(saved, incoming):
-            self.manager.create(name=package)
-            created += 1
-        return created
+        names = missing(saved, incoming)
+        self.manager.create_from_names(names)
+        return len(names)
 
 
 def missing(old, new):

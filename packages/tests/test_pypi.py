@@ -1,33 +1,29 @@
 import mock
-from mock import call
 from expecter import expect
 from unittest import TestCase
 from ..pypi import Importer, missing
 
 class ImporterTest(TestCase):
     def setUp(self):
+        self.names = ['a', 'b', 'c']
         self.client = mock.Mock()
+        self.client.list_packages.return_value = self.names
         self.manager = mock.Mock()
         self.importer = Importer(self.client, self.manager)
 
 
 class AllPackagesImporterTest(ImporterTest):
     def test_saves_all_when_db_clean(self):
-        self.client.list_packages.return_value = ['a', 'b', 'c']
         self.manager.all_package_names.return_value = []
         self.importer.all_packages()
-        creates = self.manager.create.call_args_list
-        expect(creates) == [call(name=n) for n in ['a', 'b', 'c']]
+        self.manager.create_from_names.assert_called_with(self.names)
 
     def test_saves_nothing_when_db_same(self):
-        self.client.list_packages.return_value = ['a', 'b', 'c']
-        self.manager.all_package_names.return_value = ['a', 'b', 'c']
+        self.manager.all_package_names.return_value = self.names
         self.importer.all_packages()
-        creates = self.manager.create.call_args_list
-        expect(creates) == []
+        self.manager.create_from_names.assert_called_with([])
 
     def test_returns_number_of_packages_added(self):
-        self.client.list_packages.return_value = ['a', 'b', 'c']
         self.manager.all_package_names.return_value = ['b']
         expect(self.importer.all_packages()) == 2
 
