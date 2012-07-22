@@ -21,6 +21,13 @@ class Package(models.Model):
         return [rel.version for rel in self.releases.all()]
 
 
+class PackageReleaseManager(models.Manager):
+    def create_from_release_data(self, package, data):
+        releases = [PackageRelease(package_id=package.id, **datum)
+                    for datum in data]
+        self.bulk_create(releases)
+
+
 class PackageRelease(models.Model):
     package = models.ForeignKey(Package, related_name='releases')
     version = models.CharField(max_length=100)
@@ -33,6 +40,7 @@ class PackageRelease(models.Model):
     maintainer = models.TextField()
     maintainer_email = models.EmailField()
     timestamp = models.DateTimeField(null=True, blank=True)
+    objects = PackageReleaseManager()
 
     class Meta:
         unique_together = ('version', 'package')
