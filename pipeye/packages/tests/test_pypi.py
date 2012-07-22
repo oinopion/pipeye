@@ -26,6 +26,11 @@ class AllPackagesImporterTest(ImporterTest):
         creates = self.manager.create.call_args_list
         expect(creates) == []
 
+    def test_returns_number_of_packages_added(self):
+        self.client.list_packages.return_value = ['a', 'b', 'c']
+        self.manager.all_package_names.return_value = ['b']
+        expect(self.importer.all_packages()) == 2
+
 
 class MissingTest(TestCase):
     def test_exclusive(self):

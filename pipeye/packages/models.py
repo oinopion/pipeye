@@ -3,7 +3,7 @@ from django.db import models
 class PackageManager(models.Manager):
     def all_package_names(self):
         """Returns alphabetically sorted list of packages names"""
-        return []
+        return list(self.values_list('name', flat=True))
 
 
 class Package(models.Model):

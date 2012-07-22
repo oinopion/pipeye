@@ -27,16 +27,19 @@ class Client(object):
 class Importer(object):
     """Class encapsulating importing logic"""
 
-    def __init__(self, client, manager):
-        self.client = client
-        self.manager = manager
+    def __init__(self, client=None, manager=None):
+        self.client = client or Client()
+        self.manager = manager or Package.objects
 
     def all_packages(self):
         """Saves all packages names"""
         saved = self.manager.all_package_names()
         incoming = self.client.list_packages()
+        created = 0
         for package in missing(saved, incoming):
             self.manager.create(name=package)
+            created += 1
+        return created
 
 
 def missing(old, new):
