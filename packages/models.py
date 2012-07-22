@@ -5,6 +5,10 @@ class PackageManager(models.Manager):
         """Returns alphabetically sorted list of packages names"""
         return list(self.values_list('name', flat=True))
 
+    def create_from_names(self, names):
+        """Efficiently creates packages from list of names"""
+        self.bulk_create([Package(name=name) for name in names])
+
 
 class Package(models.Model):
     name = models.CharField(max_length=250, unique=True)
