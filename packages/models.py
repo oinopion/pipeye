@@ -17,9 +17,12 @@ class Package(models.Model):
     def __unicode__(self):
         return self.name
 
+    def versions(self):
+        return [rel.version for rel in self.releases.all()]
+
 
 class PackageRelease(models.Model):
-    package = models.ForeignKey(Package)
+    package = models.ForeignKey(Package, related_name='releases')
     version = models.CharField(max_length=100)
     summary = models.TextField()
     home_page = models.URLField()
@@ -35,4 +38,4 @@ class PackageRelease(models.Model):
         unique_together = ('version', 'package')
 
     def __unicode__(self):
-        return "%s: %s" % (self.package.name, self.version)
+        return "%s-%s" % (self.package.name, self.version)
