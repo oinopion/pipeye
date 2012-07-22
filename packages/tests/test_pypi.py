@@ -1,18 +1,16 @@
 import mock
 from expecter import expect
 from unittest import TestCase
-from ..pypi import Importer, missing
+from ..pypi import Importer, ReleaseImporter, missing
 
 class ImporterTest(TestCase):
     def setUp(self):
-        self.names = ['a', 'b', 'c']
         self.client = mock.Mock()
-        self.client.list_packages.return_value = self.names
         self.manager = mock.Mock()
         self.importer = Importer(self.client, self.manager)
+        self.names = ['a', 'b', 'c']
+        self.client.list_packages.return_value = self.names
 
-
-class AllPackagesImporterTest(ImporterTest):
     def test_saves_all_when_db_clean(self):
         self.manager.all_package_names.return_value = []
         self.importer.all_packages()
@@ -26,6 +24,35 @@ class AllPackagesImporterTest(ImporterTest):
     def test_returns_number_of_packages_added(self):
         self.manager.all_package_names.return_value = ['b']
         expect(self.importer.all_packages()) == 2
+
+
+class PackageReleasesImporterTest(TestCase):
+    def setUp(self):
+        self.client = mock.Mock()
+        self.manager = mock.Mock()
+        self.importer = ReleaseImporter(self.client, self.manager)
+        self.releases = ['1.1', '1.2', '2.0']
+        self.release_data = mock.Mock(name='data')
+        self.client.package_releases.return_value = self.releases
+        self.client.release_data.return_value = self.release_data
+        self.package = mock.Mock()
+        self.package.name = 'abc'
+
+    def test_fetches_all_releases_when_empty(self):
+        self.package.versions.return_value = []
+        self.importer.package(self.package)
+        self.manager.create_from_release_data.assert_called_with(
+            self.package, [self.release_data] * 3)
+
+    def test_fetches_none_if_releases_same(self):
+        self.package.versions.return_value = self.releases
+        self.importer.package(self.package)
+        self.manager.create_from_release_data.assert_called_with(
+            self.package, [])
+
+    def test_returns_number_of_fetched_vesrions(self):
+        self.package.versions.return_value = self.releases[0:1]
+        expect(self.importer.package(self.package)) == 2
 
 
 class MissingTest(TestCase):

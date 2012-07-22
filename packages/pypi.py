@@ -1,5 +1,5 @@
 import xmlrpclib
-from .models import Package
+from .models import Package, PackageRelease
 
 
 class Client(object):
@@ -40,6 +40,24 @@ class Importer(object):
         return len(names)
 
 
+class ReleaseImporter(object):
+    """Imports all releases for given package"""
+
+    def __init__(self, client=None, manager=None):
+        self.client = client or Client()
+        self.manager = manager or PackageRelease.objects
+
+    def package(self, package):
+        saved = package.versions()
+        incoming = self.client.package_releases(package.name)
+        versions = missing(saved, incoming)
+        data = [self.client.release_data(package.name, ver) for ver in versions]
+        self.manager.create_from_release_data(package, data)
+        return len(versions)
+
+
+
 def missing(old, new):
+    """Returns elements missing from old in comparison to new"""
     old = set(old)
     return [e for e in new if e not in old]
