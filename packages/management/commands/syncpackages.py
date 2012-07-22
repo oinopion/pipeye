@@ -1,5 +1,5 @@
-from django.core.management.base import NoArgsCommand, CommandError
-from ...pypi import Importer
+from django.core.management.base import NoArgsCommand
+from ...packages.pypi import Importer
 
 class Command(NoArgsCommand):
     help = 'Synchronizes list of all packages with PyPI'

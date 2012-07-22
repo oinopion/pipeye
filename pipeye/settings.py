@@ -70,7 +70,8 @@ INSTALLED_APPS = (
     'gunicorn',
     'compressor',
     'social_auth',
-    'pipeye.packages',
+
+    'packages',
 )
 
 COMPRESS_OUTPUT_DIR = 'cache'

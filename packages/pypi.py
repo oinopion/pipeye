@@ -1,5 +1,5 @@
 import xmlrpclib
-from .models import Package, PackageRelease
+from .models import Package
 
 
 class Client(object):
