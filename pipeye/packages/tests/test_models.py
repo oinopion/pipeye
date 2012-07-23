@@ -25,7 +25,7 @@ class PackageTest(TestCase):
     def test_versions_of_older(self):
         releases = PackageReleaseFactory.create_batch(3, package=self.package)
         versions = [rel.version for rel in releases]
-        expect(self.package.versions()) == versions
+        expect(set(self.package.versions())) == set(versions)
 
 
 class PackageReleasesManagerTest(TestCase):
