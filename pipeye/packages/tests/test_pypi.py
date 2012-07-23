@@ -1,13 +1,13 @@
 import mock
 from expecter import expect
 from unittest import TestCase
-from ..pypi import Importer, ReleaseImporter, missing
+from ..pypi import PackagesImporter, ReleaseImporter, missing
 
 class ImporterTest(TestCase):
     def setUp(self):
         self.client = mock.Mock()
         self.manager = mock.Mock()
-        self.importer = Importer(self.client, self.manager)
+        self.importer = PackagesImporter(self.client, self.manager)
         self.names = ['a', 'b', 'c']
         self.client.list_packages.return_value = self.names
 

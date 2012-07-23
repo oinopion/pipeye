@@ -1,10 +1,10 @@
 from django.core.management.base import NoArgsCommand
-from ...packages.pypi import Importer
+from ...pypi import PackagesImporter
 
 class Command(NoArgsCommand):
     help = 'Synchronizes list of all packages with PyPI'
 
     def handle(self, **options):
-        importer = Importer()
+        importer = PackagesImporter()
         created = importer.all_packages()
         self.stdout.write('New packages added: %d\n' % created)

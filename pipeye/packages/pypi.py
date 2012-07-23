@@ -24,7 +24,7 @@ class Client(object):
         return self.proxy.release_data(package, version)
 
 
-class Importer(object):
+class PackagesImporter(object):
     """Class encapsulating importing logic"""
 
     def __init__(self, client=None, manager=None):
