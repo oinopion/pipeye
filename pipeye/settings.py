@@ -71,7 +71,7 @@ INSTALLED_APPS = (
     'compressor',
     'social_auth',
 
-    'packages',
+    'pipeye.packages',
 )
 
 COMPRESS_OUTPUT_DIR = 'cache'
