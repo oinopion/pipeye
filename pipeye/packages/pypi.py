@@ -1,5 +1,6 @@
 import xmlrpclib
 from .models import Package, PackageRelease
+from pipeye.packages.forms import PackageReleaseForm
 
 
 class Client(object):
@@ -21,7 +22,10 @@ class Client(object):
         return self.proxy.package_releases(package)
 
     def release_data(self, package, version):
-        return self.proxy.release_data(package, version)
+        data = self.proxy.release_data(package, version)
+        form = PackageReleaseForm(data)
+        assert form.is_valid(), dict(form.data)
+        return form.cleaned_data
 
 
 class PackagesImporter(object):
