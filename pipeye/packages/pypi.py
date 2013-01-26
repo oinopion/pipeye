@@ -1,6 +1,6 @@
 import xmlrpclib
 from .models import Package, PackageRelease
-from pipeye.packages.forms import PackageReleaseForm
+from .forms import PackageReleaseForm
 
 
 class Client(object):
@@ -52,13 +52,12 @@ class ReleaseImporter(object):
         self.manager = manager or PackageRelease.objects
 
     def package(self, package):
-        saved = package.versions()
-        incoming = self.client.package_releases(package.name)
-        versions = missing(saved, incoming)
+        saved_versions = package.versions()
+        incoming_versions = self.client.package_releases(package.name)
+        versions = missing(saved_versions, incoming_versions)
         data = [self.client.release_data(package.name, ver) for ver in versions]
         self.manager.create_from_release_data(package, data)
         return len(versions)
-
 
 
 def missing(old, new):

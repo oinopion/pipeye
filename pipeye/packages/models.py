@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class PackageManager(models.Manager):
     def all_package_names(self):
         """Returns alphabetically sorted list of packages names"""

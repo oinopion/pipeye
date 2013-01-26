@@ -53,3 +53,13 @@ development::
     # Use your GitHub app id and secret
     export GITHUB_APP_ID=<app_id>
     export GITHUB_API_SECRET=<api_secret>
+
+
+Custom commands
+===============
+
+``syncpackages``
+    Synchronizes all packages with PyPI. Does not synchronize package versions.
+
+``syncreleases {pkg1} {pkg2} ...``
+    Synchronizes package releases for given package names.

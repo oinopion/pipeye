@@ -1,9 +1,9 @@
 import mock
+import unittest
 from expecter import expect
-from unittest import TestCase
 from ..pypi import PackagesImporter, ReleaseImporter, missing
 
-class ImporterTest(TestCase):
+class ImporterTest(unittest.TestCase):
     def setUp(self):
         self.client = mock.Mock()
         self.manager = mock.Mock()
@@ -26,7 +26,7 @@ class ImporterTest(TestCase):
         expect(self.importer.all_packages()) == 2
 
 
-class PackageReleasesImporterTest(TestCase):
+class PackageReleasesImporterTest(unittest.TestCase):
     def setUp(self):
         self.client = mock.Mock()
         self.manager = mock.Mock()
@@ -55,7 +55,7 @@ class PackageReleasesImporterTest(TestCase):
         expect(self.importer.package(self.package)) == 2
 
 
-class MissingTest(TestCase):
+class MissingTest(unittest.TestCase):
     def test_exclusive(self):
         old = [1, 2]
         new = [3, 4]

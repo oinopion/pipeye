@@ -1,6 +1,7 @@
 from django import forms
 from .models import PackageRelease
 
+
 class PackageReleaseForm(forms.ModelForm):
     class Meta:
         model = PackageRelease
