@@ -11,10 +11,11 @@ without choosing one of the settings files. There are three available ones:
 
 ``pipeye.settings.prod``
     For production use. Requires settings following environmental variables:
-      - DATABASE_URL
-      - SECRET_KEY
-      - GITHUB_APP_ID
-      - GITHUB_API_SECRET
+
+    - DATABASE_URL
+    - SECRET_KEY
+    - GITHUB_APP_ID
+    - GITHUB_API_SECRET
 
 ``pipeye.settings.dev``
     For local development. Will use postgres database named pipeye. Requires
