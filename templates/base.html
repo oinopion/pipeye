@@ -3,36 +3,36 @@
 {% load url from future %}
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pipeye</title>
-    {% compress css %}
-        <link href="{{ STATIC_URL }}css/vendor/bootstrap-2.0.4.css"
-              rel="stylesheet" type="text/css">
-    {% endcompress %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pipeye</title>
+  {% compress css %}
+    <link href="{{ STATIC_URL }}lib/bootstrap-2.2.2/css/bootstrap.css"
+          rel="stylesheet" type="text/css"/>
+  {% endcompress %}
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="brand" href="/">Pipeye</a>
-            <ul class="nav">
-                <li><a href="/">Home</a></li>
-            </ul>
-            <ul class="nav pull-right">
-                {% if user.is_authenticated %}
-                    <li><a href="/">{{ user.username }}</a></li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">Login with GitHub</a></li>
-                {% endif %}
-            </ul>
-        </div>
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="/">Pipeye</a>
+      <ul class="nav">
+        <li><a href="/">Home</a></li>
+      </ul>
+      <ul class="nav pull-right">
+        {% if user.is_authenticated %}
+          <li><a href="/">{{ user.username }}</a></li>
+        {% else %}
+          <li><a href="{% url 'login' %}">Login with GitHub</a></li>
+        {% endif %}
+      </ul>
     </div>
+  </div>
 </div>
 
 <div class='container'>
-    {% block content %}
-    {% endblock %}
+  {% block content %}
+  {% endblock %}
 </div>
 </body>
 </html>
