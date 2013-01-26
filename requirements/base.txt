@@ -1,0 +1,14 @@
+Django==1.4.3
+psycopg2==2.4.6
+South==0.7.6
+gunicorn==0.17.2
+pytz==2012j
+django-compressor==1.2
+django-discover-runner==0.2.2
+django-social-auth==0.7.18
+hurl==2.0
+mock==1.0.1
+expecter==0.2.2
+factory-boy==1.2.0
+jsmin==2.0.2
+cssmin==0.1.4
