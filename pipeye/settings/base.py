@@ -86,12 +86,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 # compressor settings
-COMPRESS_OUTPUT_DIR = 'cache'
-COMPRESS_CSS_FILTERS = (
-    'compressor.filters.css_default.CssAbsoluteFilter',
-    'compressor.filters.cssmin.CSSMinFilter',
-)
-COMPRESS_CSS_HASHING_METHOD = 'content'
 COMPRESS_PRECOMPILERS = (
     ('text/coffeescript', 'coffee --compile --stdio'),
     ('text/x-sass', 'sass {infile} {outfile}'),
