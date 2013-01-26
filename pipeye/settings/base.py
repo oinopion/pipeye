@@ -1,22 +1,19 @@
 # Django settings for pipeye project.
-from os import path, environ
+import os
 from django.core.urlresolvers import reverse_lazy
 
-ROOT = path.dirname(path.dirname(__file__))
 
-DEBUG = environ.get('DEBUG', False)
-TEMPLATE_DEBUG = DEBUG
+CODE_ROOT = os.path.dirname(os.path.dirname(__file__))
+ROOT = os.path.dirname(CODE_ROOT)
 
-ADMINS = [('Tomek Paczkowski', 'tomek@hauru.eu')]
+def project_path(*segments):
+    return os.path.join(ROOT, *segments)
+
+ADMINS = (
+    ('Tomek Paczkowski', 'tomek@hauru.eu'),
+)
 
 MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'pipeye',
-    }
-}
 
 SITE_ID = 1
 
@@ -30,9 +27,13 @@ USE_TZ = True
 MEDIA_ROOT = ''
 MEDIA_URL = ''
 
-STATIC_ROOT = path.join(ROOT, 'public')
+STATIC_ROOT = project_path('public')
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [path.join(ROOT, 'static')]
+
+STATICFILES_DIRS = (
+    project_path('static'),
+)
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -43,8 +44,10 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
-TEMPLATE_DIRS = [path.join(ROOT, 'templates')]
 
+TEMPLATE_DIRS = (
+    project_path('templates'),
+)
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -58,8 +61,6 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'pipeye.urls'
 WSGI_APPLICATION = 'pipeye.wsgi.application'
 
-SECRET_KEY = environ.get('SECRET', '')
-
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,10 +71,15 @@ INSTALLED_APPS = (
     'gunicorn',
     'compressor',
     'social_auth',
-
     'pipeye.packages',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.contrib.github.GithubBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+# compressor settings
 COMPRESS_OUTPUT_DIR = 'cache'
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
@@ -85,16 +91,14 @@ COMPRESS_PRECOMPILERS = [
     ('text/x-sass', 'sass {infile} {outfile}'),
 ]
 
+# social-auth settings
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 SOCIAL_AUTH_COMPLETE_URL_NAME = 'login_complete'
-AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.contrib.github.GithubBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-GITHUB_APP_ID = environ.get('GITHUB_APP_ID')
-GITHUB_API_SECRET = environ.get('GITHUB_API_SECRET')
+GITHUB_APP_ID = os.environ.get('GITHUB_APP_ID')
+GITHUB_API_SECRET = os.environ.get('GITHUB_API_SECRET')
 
+# testing settings
 TEST_RUNNER = 'discover_runner.DiscoverRunner'
 TEST_DISCOVER_TOP_LEVEL = ROOT
 
@@ -129,9 +133,3 @@ LOGGING = {
         },
     }
 }
-
-AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.contrib.github.GithubBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
