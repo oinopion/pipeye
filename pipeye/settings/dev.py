@@ -1,5 +1,6 @@
 from .base import *
 import dj_database_url
+from django.core.exceptions import ImproperlyConfigured
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -22,3 +23,9 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
     'ENABLE_STACKTRACES' : False,
 }
+
+try:
+    GITHUB_APP_ID = os.environ['GITHUB_APP_ID']
+    GITHUB_API_SECRET = os.environ['GITHUB_API_SECRET']
+except KeyError:
+    raise ImproperlyConfigured('Please provide GitHub app credentials')

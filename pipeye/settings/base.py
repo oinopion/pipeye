@@ -2,34 +2,40 @@
 import os
 from django.core.urlresolvers import reverse_lazy
 
-
+# Path to root of Python code
 CODE_ROOT = os.path.dirname(os.path.dirname(__file__))
+
+# Path to project root
 ROOT = os.path.dirname(CODE_ROOT)
 
 def project_path(*segments):
+    """Generate path relative to project root"""
     return os.path.join(ROOT, *segments)
 
-ADMINS = (
+ADMINS = MANAGERS = (
     ('Tomek Paczkowski', 'tomek@hauru.eu'),
 )
 
-MANAGERS = ADMINS
-
-SITE_ID = 1
-
+# i18n settings
 LANGUAGE_CODE = 'en-us'
 USE_I18N = True
 USE_L10N = True
 
+# Timezone settings
 TIME_ZONE = 'UTC'
 USE_TZ = True
 
+# User uploaded media
 MEDIA_ROOT = ''
 MEDIA_URL = ''
 
+# Path where collectstatic puts all files
 STATIC_ROOT = project_path('public')
+
+# URL to where static files are hosted
 STATIC_URL = '/static/'
 
+# Path to project-wide static files
 STATICFILES_DIRS = (
     project_path('static'),
 )
@@ -81,24 +87,23 @@ AUTHENTICATION_BACKENDS = (
 
 # compressor settings
 COMPRESS_OUTPUT_DIR = 'cache'
-COMPRESS_CSS_FILTERS = [
+COMPRESS_CSS_FILTERS = (
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
-]
+)
 COMPRESS_CSS_HASHING_METHOD = 'content'
-COMPRESS_PRECOMPILERS = [
+COMPRESS_PRECOMPILERS = (
     ('text/coffeescript', 'coffee --compile --stdio'),
     ('text/x-sass', 'sass {infile} {outfile}'),
-]
+)
 
 # social-auth settings
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 SOCIAL_AUTH_COMPLETE_URL_NAME = 'login_complete'
-GITHUB_APP_ID = os.environ.get('GITHUB_APP_ID')
-GITHUB_API_SECRET = os.environ.get('GITHUB_API_SECRET')
 
-# testing settings
+
+# Testing settings
 TEST_RUNNER = 'discover_runner.DiscoverRunner'
 TEST_DISCOVER_TOP_LEVEL = ROOT
 
@@ -119,16 +124,17 @@ LOGGING = {
         },
         'console': {
             'class': 'logging.StreamHandler',
+            'level': 'INFO',
         }
     },
     'loggers': {
         '': {
             'handlers': ['console'],
-            'level': 'ERROR',
+            'level': 'INFO',
         },
         'django.request': {
             'handlers': ['mail_admins'],
-            'level': 'ERROR',
+            'level': 'INFO',
             'propagate': True,
         },
     }
