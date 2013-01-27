@@ -23,3 +23,6 @@ PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
     'django.contrib.auth.hashers.SHA1PasswordHasher',
 )
+
+GITHUB_APP_ID = 'app_id'
+GITHUB_API_SECRET = 'api_secret'
