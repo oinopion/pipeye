@@ -6,6 +6,7 @@ pytz==2012j
 django-compressor==1.2
 django-discover-runner==0.2.2
 django-social-auth==0.7.18
+django-braces==0.2.2
 hurl==2.0
 mock==1.0.1
 expecter==0.2.2
