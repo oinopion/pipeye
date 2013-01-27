@@ -79,6 +79,7 @@ INSTALLED_APPS = (
     'compressor',
     'social_auth',
     'pipeye.packages',
+    'pipeye.watches',
 )
 
 AUTHENTICATION_BACKENDS = (
