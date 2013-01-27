@@ -1,6 +1,7 @@
-from django.views.generic.list import ListView
+from django.views.generic import ListView
 from braces.views import LoginRequiredMixin
 from .models import Watch
+
 
 class WatchesListView(LoginRequiredMixin, ListView):
     queryset = Watch.objects.select_related('package')
@@ -10,5 +11,5 @@ class WatchesListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         qs = super(WatchesListView, self).get_queryset()
         return qs.filter(user=self.request.user)
-    
+
 watches_list = WatchesListView.as_view()
