@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>You are currently watching:</h1>
+
+  <ul>
+    {% for watch in watches %}
+      <li>{{ watch.package }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

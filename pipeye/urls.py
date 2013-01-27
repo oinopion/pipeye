@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'pipeye.views.home', name='home'),
+    url(r'^watches/', include('pipeye.watches.urls')),
 
     # github login
     url(r'^login/$', 'social_auth.views.auth',
