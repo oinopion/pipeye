@@ -1,7 +1,7 @@
 from django.test import TestCase
 from expecter import expect
 from ..models import Package, PackageRelease
-from .factories import PackageReleaseFactory
+from .factories import PackageReleaseDataFactory
 
 class PackageManagerTest(TestCase):
     def test_all_package_names(self):
@@ -20,6 +20,6 @@ class PackageReleasesManagerTest(TestCase):
         self.package = Package.objects.create(name='abc')
 
     def test_create_from_release_data(self):
-        data = [PackageReleaseFactory.attributes() for _ in range(3)]
+        data = [PackageReleaseDataFactory.attributes() for _ in range(3)]
         PackageRelease.objects.create_from_release_data(self.package, data)
         expect(self.package.releases.count()) == 3
