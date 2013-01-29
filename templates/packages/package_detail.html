@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ package }}</h1>
+  <h3>Versions</h3>
+  {% if package.versions %}
+  <ul>
+    {% for version in package.versions %}
+      <li>{{ version }}</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>No know versions.</p>
+  {% endif %}
+{% endblock %}
