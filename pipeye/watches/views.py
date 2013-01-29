@@ -1,9 +1,9 @@
-from django.views.generic import ListView
+from django.views import generic
 from braces.views import LoginRequiredMixin
 from .models import Watch
 
 
-class WatchesListView(LoginRequiredMixin, ListView):
+class WatchesListView(LoginRequiredMixin, generic.ListView):
     queryset = Watch.objects.select_related('package')
     context_object_name = 'watches'
     template_name = 'watches/watches_list.html'
