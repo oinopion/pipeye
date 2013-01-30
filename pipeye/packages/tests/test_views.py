@@ -7,8 +7,8 @@ class PackageSearchViewTest(ViewTestCase):
     url = reverse_lazy('package_search')
 
     def test_filters_by_name(self):
-        a = PackageFactory(name='aaa')
-        b = PackageFactory(name='bbb')
+        a = PackageFactory.create(name='aaa')
+        b = PackageFactory.create(name='bbb')
         resp = self.get(data={'q': 'a'})
         packages = resp.context['packages']
         expect(packages).contains(a)
