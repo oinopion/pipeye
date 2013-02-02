@@ -23,8 +23,11 @@ class WatchesListViewTest(ViewTestCase):
 
 
 class CreateWatchViewTest(ViewTestCase):
+    package = None
+
     def get_url(self):
-        self.package = PackageFactory.create()
+        if not self.package:
+            self.package = PackageFactory.create()
         return url('create_watch', self.package.name)
 
     def test_requires_login(self):
@@ -36,3 +39,10 @@ class CreateWatchViewTest(ViewTestCase):
         expect(resp.status_code)  == 302
         qs = Watch.objects.filter(user=user, package=self.package)
         expect(qs.exists()) == True
+
+    def test_is_indempotent(self):
+        watch = WatchFactory.create()
+        self.login(watch.user)
+        self.package = watch.package
+        resp = self.post()
+        expect(resp.status_code) == 302

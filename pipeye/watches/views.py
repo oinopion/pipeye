@@ -20,7 +20,7 @@ watches_list = WatchesListView.as_view()
 class CreateWatchView(LoginRequiredMixin, generic.View):
     def post(self, request, package_name):
         package = get_object_or_404(Package, name=package_name)
-        Watch.objects.create(user=request.user, package=package)
+        Watch.objects.get_or_create(user=request.user, package=package)
         return redirect('package_detail', package.name)
 
 create_watch = CreateWatchView.as_view()

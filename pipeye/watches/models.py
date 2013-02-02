@@ -9,6 +9,7 @@ class Watch(models.Model):
 
     class Meta:
         verbose_name_plural = 'Watches'
+        unique_together = ('user', 'package')
 
     def __unicode__(self):
         return "%s/%s" % (self.user.username, self.package.name)
