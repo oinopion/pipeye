@@ -24,3 +24,12 @@ class CreateWatchView(LoginRequiredMixin, generic.View):
         return redirect('package_detail', package.name)
 
 create_watch = CreateWatchView.as_view()
+
+
+class DeleteWatchView(LoginRequiredMixin, generic.View):
+    def post(self, request, package_name):
+        package = get_object_or_404(Package, name=package_name)
+        package.watch_set.filter(user=request.user).delete()
+        return redirect('package_detail', package_name)
+
+delete_watch = DeleteWatchView.as_view()

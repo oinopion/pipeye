@@ -46,3 +46,25 @@ class CreateWatchViewTest(ViewTestCase):
         self.package = watch.package
         resp = self.post()
         expect(resp.status_code) == 302
+
+
+class DeleteWatchViewTest(ViewTestCase):
+    package = None
+
+    def get_url(self):
+        if not self.package:
+            self.package = PackageFactory.create()
+        return url('delete_watch', self.package.name)
+
+    def test_requires_login(self):
+        self.assertRequiresLogin()
+
+    def test_deletes_watch(self):
+        watch = WatchFactory.create(user=self.login())
+        self.package = watch.package
+        resp = self.post()
+        expect(resp.status_code) == 302
+        qs = self.package.watch_set.filter(user=watch.user)
+        expect(qs.exists()) == False
+
+

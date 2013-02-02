@@ -2,5 +2,8 @@ import hurl
 
 urlpatterns = hurl.patterns('pipeye.watches.views', {
     '': 'watches_list',
-    '<package_name:str>/create': 'create_watch',
+    '<package_name:str>': {
+        'create': 'create_watch',
+        'delete': 'delete_watch',
+    },
 })
