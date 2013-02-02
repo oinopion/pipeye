@@ -1,5 +1,5 @@
 from expecter import expect
-from django.core.urlresolvers import reverse_lazy
+from pipeye.utils.urls import url, url_lazy
 from pipeye.utils.testing import ViewTestCase
 from pipeye.packages.tests.factories import PackageFactory
 from .factories import WatchFactory
@@ -7,7 +7,7 @@ from ..models import Watch
 
 
 class WatchesListViewTest(ViewTestCase):
-    url = reverse_lazy('watches_list')
+    url = url_lazy('watches_list')
 
     def test_requires_login(self):
         self.assertRequiresLogin()
@@ -23,15 +23,16 @@ class WatchesListViewTest(ViewTestCase):
 
 
 class CreateWatchViewTest(ViewTestCase):
-    url = reverse_lazy('create_watch')
+    def get_url(self):
+        self.package = PackageFactory.create()
+        return url('create_watch', self.package.name)
 
     def test_requires_login(self):
         self.assertRequiresLogin()
 
     def test_creates_watch(self):
         user = self.login()
-        package = PackageFactory.create()
-        resp = self.post({'package': package.pk})
+        resp = self.post()
         expect(resp.status_code)  == 302
-        qs = Watch.objects.filter(user=user, package=package)
+        qs = Watch.objects.filter(user=user, package=self.package)
         expect(qs.exists()) == True

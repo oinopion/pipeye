@@ -1,8 +1,8 @@
-from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404, redirect
 from django.views import generic
-from braces.views import LoginRequiredMixin, UserFormKwargsMixin
+from braces.views import LoginRequiredMixin
+from pipeye.packages.models import Package
 from .models import Watch
-from .forms import UserWatchForm
 
 
 class WatchesListView(LoginRequiredMixin, generic.ListView):
@@ -17,13 +17,10 @@ class WatchesListView(LoginRequiredMixin, generic.ListView):
 watches_list = WatchesListView.as_view()
 
 
-class CreateWatchView(LoginRequiredMixin, UserFormKwargsMixin, generic.CreateView):
-    model = Watch
-    template_name = 'watches/watch_form.html'
-    form_class = UserWatchForm
-    http_method_names = ['post']
-
-    def get_success_url(self):
-        return reverse('package_detail', args=[self.object.package.name])
+class CreateWatchView(LoginRequiredMixin, generic.View):
+    def post(self, request, package_name):
+        package = get_object_or_404(Package, name=package_name)
+        Watch.objects.create(user=request.user, package=package)
+        return redirect('package_detail', package.name)
 
 create_watch = CreateWatchView.as_view()
