@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
+{% load watches_tags %}
 
 {% block content %}
   <h1>{{ package }}</h1>
+
+  {% watch_button package %}
+
   <h3>Versions</h3>
   {% if package.versions %}
   <ul>
