@@ -7,6 +7,9 @@ class Package(models.Model):
     name = models.CharField(max_length=250, unique=True)
     objects = PackageManager()
 
+    class Meta:
+        ordering = ('name',)
+
     def __unicode__(self):
         return self.name
 
