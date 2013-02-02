@@ -120,17 +120,17 @@ LOGGING = {
         },
         'console': {
             'class': 'logging.StreamHandler',
-            'level': 'INFO',
+            'level': 'ERROR',
         }
     },
     'loggers': {
         '': {
             'handlers': ['console'],
-            'level': 'INFO',
+            'level': 'ERROR',
         },
         'django.request': {
             'handlers': ['mail_admins'],
-            'level': 'INFO',
+            'level': 'ERROR',
             'propagate': True,
         },
     }
