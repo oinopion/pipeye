@@ -12,11 +12,24 @@ class Package(models.Model):
     class Meta:
         ordering = ('name',)
 
+    def __init__(self, *args, **kwargs):
+        super(Package, self).__init__(*args, **kwargs)
+        self.__previous_latest_release_id = self.latest_release_id
+
     def __unicode__(self):
         return self.name
 
+    def save(self, force_insert=False, force_update=False, using=None):
+        super(Package, self).save(force_insert, force_update, using)
+        if self.latest_release_changed:
+            self.changes.create(release=self.latest_release)
+
     def versions(self):
         return [rel.version for rel in self.releases.all()]
+
+    @property
+    def latest_release_changed(self):
+        return self.latest_release_id != self.__previous_latest_release_id
 
     @property
     def latest_version(self):
@@ -48,3 +61,9 @@ class PackageRelease(models.Model):
 
     def __unicode__(self):
         return "%s-%s" % (self.package.name, self.version)
+
+
+class PackageReleaseChange(models.Model):
+    package = models.ForeignKey(Package, related_name='changes')
+    release = models.ForeignKey(PackageRelease, related_name='+')
+    timestamp = models.DateTimeField(default=timezone.now)

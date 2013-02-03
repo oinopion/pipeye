@@ -28,3 +28,17 @@ class PackageTest(TestCase):
         release = PackageReleaseFactory.create(package=self.package)
         self.package.latest_version = release.version
         expect(self.package.latest_release) == release
+
+    def test_latest_release_changed_when_not(self):
+        expect(self.package.latest_release_changed) == False
+
+    def test_latest_release_changed_when_did(self):
+        release = PackageReleaseFactory.create(package=self.package)
+        self.package.latest_release = release
+        expect(self.package.latest_release_changed) == True
+
+    def test_records_release_changes(self):
+        release = PackageReleaseFactory.create(package=self.package)
+        self.package.latest_release = release
+        self.package.save()
+        expect(self.package.changes.filter(release=release).exists()) == True
