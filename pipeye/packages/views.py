@@ -17,13 +17,19 @@ class PackageSearchView(generic.ListView):
     template_name = 'packages/search.html'
 
     def get_queryset(self):
-        if self.get_query():
+        if self.query:
             qs = super(PackageSearchView, self).get_queryset()
-            return qs.filter(name__istartswith=self.get_query())
+            return qs.filter(name__istartswith=self.query)
         else:
             return Package.objects.none()
 
-    def get_query(self):
+    @property
+    def query(self):
         return self.request.GET.get('q')
+
+    def get_context_data(self, **kwargs):
+        context = super(PackageSearchView, self).get_context_data(**kwargs)
+        context['query'] = self.query
+        return context
 
 package_search = PackageSearchView.as_view()
