@@ -2,13 +2,7 @@
 {% load url from future %}
 
 {% block content %}
-  <form action="{% url 'package_search' %}" method="get">
-    <label>
-      Package:
-      <input name="q" type="search" value="{{ params.q }}">
-    </label>
-    <button type="submit" class="btn btn-primary">Go!</button>
-  </form>
+  {% include 'packages/_package_search_form.html' %}
 
   <ul>
     {% for package in packages %}
