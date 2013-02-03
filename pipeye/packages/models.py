@@ -5,6 +5,8 @@ from .managers import PackageReleaseManager, PackageManager
 
 class Package(models.Model):
     name = models.CharField(max_length=250, unique=True)
+    latest_release = models.ForeignKey('PackageRelease', related_name='+',
+        null=True, blank=True)
     objects = PackageManager()
 
     class Meta:
@@ -15,6 +17,16 @@ class Package(models.Model):
 
     def versions(self):
         return [rel.version for rel in self.releases.all()]
+
+    @property
+    def latest_version(self):
+        if self.latest_release:
+            return self.latest_release.version
+        return ''
+
+    @latest_version.setter
+    def latest_version(self, new_version):
+        self.latest_release = self.releases.get(version=new_version)
 
 
 class PackageRelease(models.Model):

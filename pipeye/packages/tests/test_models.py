@@ -16,3 +16,15 @@ class PackageTest(TestCase):
         versions = [rel.version for rel in releases]
         expect(set(self.package.versions())) == set(versions)
 
+    def test_latest_version_of_fresh(self):
+        expect(self.package.latest_version) == ''
+
+    def test_latest_version_of_older(self):
+        release = PackageReleaseFactory.create(package=self.package)
+        self.package.latest_release = release
+        expect(self.package.latest_version) == release.version
+
+    def test_settings_latest_version(self):
+        release = PackageReleaseFactory.create(package=self.package)
+        self.package.latest_version = release.version
+        expect(self.package.latest_release) == release
