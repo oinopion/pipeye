@@ -1,7 +1,7 @@
 import mock
 import unittest
 from expecter import expect
-from ..pypi import PackagesImporter, ReleaseImporter, missing
+from ..pypi import PackagesImporter, ReleaseImporter, missing, ChangelogReactor
 
 class ImporterTest(unittest.TestCase):
     def setUp(self):
@@ -63,9 +63,41 @@ class PackageReleasesImporterTest(unittest.TestCase):
         expect(self.package.latest_version.called) == False
         expect(self.package.save.called) == False
 
-    def test_returns_number_of_fetched_vesrions(self):
+    def test_returns_number_of_fetched_versions(self):
         self.package.versions.return_value = self.releases[0:1]
         expect(self.importer.package(self.package)) == 2
+
+    def test_gets_package_given_only_name(self):
+        self.package.versions.return_value = self.releases
+        self.manager.get.return_value = self.package
+        self.importer.package('abc')
+        self.manager.get.assert_called_with(name='abc')
+
+
+
+class ChangelogReactorTest(unittest.TestCase):
+    def setUp(self):
+        self.client = mock.Mock()
+        self.manager = mock.Mock()
+        self.reactor = ChangelogReactor(self.client, self.manager)
+        self.reactor.package_importer_class = mock.Mock()
+        self.reactor.release_importer_class = mock.Mock()
+
+    def test_imports_package_on_create(self):
+        self.client.changelog.return_value = [['abc', None, 1234567890, 'create']]
+        self.reactor.check(1234567890)
+        self.reactor.package_importer_class().all_packages.assert_called_with()
+
+    def test_imports_package_releases_on_new_release(self):
+        self.client.changelog.return_value = [['abc', '1.0', 1234567890, 'new release']]
+        self.reactor.check(1234567890)
+        self.reactor.release_importer_class().package.assert_called_with('abc')
+
+    def test_calls_changelog_with_given_timestamp(self):
+        self.client.changelog.return_value = []
+        self.reactor.check(1234567890)
+        self.client.changelog.assert_called_with(1234567890)
+
 
 
 class MissingTest(unittest.TestCase):
