@@ -57,6 +57,9 @@ class ReleaseImporter(object):
         versions = missing(saved_versions, incoming_versions)
         data = [self.client.release_data(package.name, ver) for ver in versions]
         self.manager.create_from_release_data(package, data)
+        if incoming_versions:
+            package.latest_version = incoming_versions[0]
+            package.save()
         return len(versions)
 
 

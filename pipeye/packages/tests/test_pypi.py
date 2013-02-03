@@ -31,7 +31,7 @@ class PackageReleasesImporterTest(unittest.TestCase):
         self.client = mock.Mock()
         self.manager = mock.Mock()
         self.importer = ReleaseImporter(self.client, self.manager)
-        self.releases = ['1.1', '1.2', '2.0']
+        self.releases = ['2.0', '1.2', '1.1']
         self.release_data = mock.Mock(name='data')
         self.client.package_releases.return_value = self.releases
         self.client.release_data.return_value = self.release_data
@@ -49,6 +49,19 @@ class PackageReleasesImporterTest(unittest.TestCase):
         self.importer.package(self.package)
         self.manager.create_from_release_data.assert_called_with(
             self.package, [])
+
+    def test_sets_latest_version(self):
+        self.package.versions.return_value = []
+        self.importer.package(self.package)
+        expect(self.package.latest_version) == self.releases[0]
+        self.package.save.assert_called_with()
+
+    def test_does_not_set_latest_version_if_not_versions(self):
+        self.package.versions.return_value = []
+        self.client.package_releases.return_value = []
+        self.importer.package(self.package)
+        expect(self.package.latest_version.called) == False
+        expect(self.package.save.called) == False
 
     def test_returns_number_of_fetched_vesrions(self):
         self.package.versions.return_value = self.releases[0:1]
