@@ -1,106 +1,72 @@
 import mock
-import unittest
+from django.utils import timezone
+from django.test import TestCase
 from expecter import expect
-from ..pypi import PackagesImporter, ReleaseImporter, missing, ChangelogReactor
+from ..models import Package
+from ..pypi import PackagesImporter, missing, PypiClient
+from .factories import PackageFactory
 
-class ImporterTest(unittest.TestCase):
+
+class BaseImporterTest(TestCase):
     def setUp(self):
-        self.client = mock.Mock()
-        self.manager = mock.Mock()
-        self.importer = PackagesImporter(self.client, self.manager)
-        self.names = ['a', 'b', 'c']
-        self.client.list_packages.return_value = self.names
+        self.client = PypiClient()
+        self.client.proxy = StubProxy()
+        self.importer = PackagesImporter(self.client)
 
-    def test_saves_all_when_db_clean(self):
-        self.manager.all_package_names.return_value = []
-        self.importer.all_packages()
-        self.manager.create_from_names.assert_called_with(self.names)
 
-    def test_saves_nothing_when_db_same(self):
-        self.manager.all_package_names.return_value = self.names
-        self.importer.all_packages()
-        self.manager.create_from_names.assert_called_with([])
+class ImporterAllPackagesTest(BaseImporterTest):
+    def test_saves_all(self):
+        self.importer.sync_all_packages()
+        all_names = set(Package.objects.all_package_names())
+        expect(all_names) == set(self.client.list_packages())
 
     def test_returns_number_of_packages_added(self):
-        self.manager.all_package_names.return_value = ['b']
-        expect(self.importer.all_packages()) == 2
+        expect(self.importer.sync_all_packages()) == len(self.client.list_packages())
 
 
-class PackageReleasesImporterTest(unittest.TestCase):
+class ImporterPackageSyncTest(BaseImporterTest):
     def setUp(self):
-        self.client = mock.Mock()
-        self.manager = mock.Mock()
-        self.importer = ReleaseImporter(self.client, self.manager)
-        self.releases = ['2.0', '1.2', '1.1']
-        self.release_data = mock.Mock(name='data')
-        self.client.package_releases.return_value = self.releases
-        self.client.release_data.return_value = self.release_data
-        self.package = mock.Mock()
-        self.package.name = 'abc'
+        super(ImporterPackageSyncTest, self).setUp()
+        self.package = PackageFactory.create()
 
-    def test_fetches_all_releases_when_empty(self):
-        self.package.versions.return_value = []
-        self.importer.package(self.package)
-        self.manager.create_from_release_data.assert_called_with(
-            self.package, [self.release_data] * 3)
-
-    def test_fetches_none_if_releases_same(self):
-        self.package.versions.return_value = self.releases
-        self.importer.package(self.package)
-        self.manager.create_from_release_data.assert_called_with(
-            self.package, [])
+    def test_fetches_all_releases(self):
+        self.importer.sync_package(self.package)
+        versions = set(self.package.versions())
+        expect(versions) == set(self.client.package_releases(''))
 
     def test_sets_latest_version(self):
-        self.package.versions.return_value = []
-        self.importer.package(self.package)
-        expect(self.package.latest_version) == self.releases[0]
-        self.package.save.assert_called_with()
+        self.importer.sync_package(self.package)
+        expect(self.package.latest_version) == self.client.package_releases('')[0]
 
     def test_does_not_set_latest_version_if_not_versions(self):
-        self.package.versions.return_value = []
-        self.client.package_releases.return_value = []
-        self.importer.package(self.package)
-        expect(self.package.latest_version.called) == False
-        expect(self.package.save.called) == False
+        self.client.proxy.package_releases = mock.Mock(return_value=[])
+        self.importer.sync_package(self.package)
+        expect(self.package.latest_version) == ''
 
     def test_returns_number_of_fetched_versions(self):
-        self.package.versions.return_value = self.releases[0:1]
-        expect(self.importer.package(self.package)) == 2
-
-    def test_gets_package_given_only_name(self):
-        self.package.versions.return_value = self.releases
-        self.manager.get.return_value = self.package
-        self.importer.package('abc')
-        self.manager.get.assert_called_with(name='abc')
+        imported = self.importer.sync_package(self.package)
+        expect(imported) == len(self.client.package_releases(''))
 
 
-
-class ChangelogReactorTest(unittest.TestCase):
+class ImporterSyncChangedTest(BaseImporterTest):
     def setUp(self):
-        self.client = mock.Mock()
-        self.manager = mock.Mock()
-        self.reactor = ChangelogReactor(self.client, self.manager)
-        self.reactor.package_importer_class = mock.Mock()
-        self.reactor.release_importer_class = mock.Mock()
-
-    def test_imports_package_on_create(self):
-        self.client.changelog.return_value = [['abc', None, 1234567890, 'create']]
-        self.reactor.check(1234567890)
-        self.reactor.package_importer_class().all_packages.assert_called_with()
+        super(ImporterSyncChangedTest, self).setUp()
 
     def test_imports_package_releases_on_new_release(self):
-        self.client.changelog.return_value = [['abc', '1.0', 1234567890, 'new release']]
-        self.reactor.check(1234567890)
-        self.reactor.release_importer_class().package.assert_called_with('abc')
+        spam = PackageFactory.create(name='spam')
+        self.importer.sync_changed(timezone.now())
+        expect(set(spam.versions())) == set(self.client.package_releases(''))
 
-    def test_calls_changelog_with_given_timestamp(self):
-        self.client.changelog.return_value = []
-        self.reactor.check(1234567890)
-        self.client.changelog.assert_called_with(1234567890)
+    def test_imports_package_on_create(self):
+        self.importer.sync_changed(timezone.now())
+        expect(Package.objects.filter(name='bacon').exists()) == True
+
+    def test_returns_number_of_packages_and_releases(self):
+        result = self.importer.sync_changed(timezone.now())
+        expect(result['new_releases']) == 8
 
 
-
-class MissingTest(unittest.TestCase):
+class MissingTest(TestCase):
     def test_exclusive(self):
         old = [1, 2]
         new = [3, 4]
@@ -125,3 +91,35 @@ class MissingTest(unittest.TestCase):
         old = [1, 3]
         new = [1, 2, 3]
         expect(missing(old, new)) == [2]
+
+
+class StubProxy(object):
+    def list_packages(self):
+        return ['bacon', 'spam', 'eggs']
+
+    def package_releases(self, package):
+        expect(package).isinstance(basestring)
+        return ['1.5', '1.0', '0.9', '0.5']
+
+    def release_data(self, package, version):
+        expect(package).isinstance(basestring)
+        expect(version).isinstance(basestring)
+        return {
+            'name': package,
+            'version': version,
+            'summary': 'This is awesome package',
+            'home_page': 'http://www.%s.com/' % package,
+            'package_url': 'http://example.org/pypi/%s' % package,
+            'release_url': 'http://example.org/pypi/%s/%s' % (package, version),
+            'author': 'Team %s' % package,
+            'author_email': 'team@example.com',
+        }
+
+    def changelog(self, since):
+        expect(since).isinstance(int)
+        return [
+            ['bacon', '0.1', since + 14, 'new release'],
+            ['bacon', None, since + 14, 'create'],
+            ['spam', '2.1', since + 10, 'new release'],
+            ['cheese', '0.1', since + 4, 'remove'],
+        ]

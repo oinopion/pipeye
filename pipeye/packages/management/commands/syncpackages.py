@@ -6,5 +6,5 @@ class Command(NoArgsCommand):
 
     def handle_noargs(self, **options):
         importer = PackagesImporter()
-        created = importer.all_packages()
+        created = importer.sync_all_packages()
         self.stdout.write('New packages added: %d\n' % created)
