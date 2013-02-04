@@ -67,3 +67,7 @@ class PackageReleaseChange(models.Model):
     package = models.ForeignKey(Package, related_name='changes')
     release = models.ForeignKey(PackageRelease, related_name='+')
     timestamp = models.DateTimeField(default=timezone.now)
+
+
+class PackageImport(models.Model):
+    timestamp = models.DateTimeField(default=timezone.now)
