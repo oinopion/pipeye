@@ -7,6 +7,28 @@ from ..pypi import PackagesImporter, missing, PypiClient
 from .factories import PackageFactory
 
 
+class PypiClientTest(TestCase):
+    def setUp(self):
+        self.client = PypiClient()
+        self.client.proxy = StubProxy()
+
+    def test_missing_packages(self):
+        known = ['spam', 'eggs']
+        unknown = self.client.missing_packages(known)
+        expect(unknown) == ['bacon']
+
+    def test_missing_version_data(self):
+        known = ['1.5', '0.9', '0.5']
+        data = self.client.missing_version_data('bacon', known)
+        missing_versions = [self.client.proxy.release_data('bacon', '1.0')]
+        expect(data['missing_versions']) == missing_versions
+        expect(data['latest_version']) == '1.5'
+
+    def test_changes(self):
+        changes = self.client.changes(timezone.now())
+        expect(changes['new_packages']) == {'bacon', 'spam'}
+        expect(changes['new_releases']) == {'bacon', 'spam'}
+
 class BaseImporterTest(TestCase):
     def setUp(self):
         self.client = PypiClient()

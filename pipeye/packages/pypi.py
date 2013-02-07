@@ -33,6 +33,38 @@ class PypiClient(object):
         """Returns list of 4-tuples with PyPI changes"""
         return self.proxy.changelog(since)
 
+    def missing_packages(self, known):
+        incoming = self.list_packages()
+        return missing(known, incoming)
+
+    def missing_version_data(self, package_name, known_versions):
+        incoming_versions = self.package_releases(package_name)
+        versions = missing(known_versions, incoming_versions)
+        if not versions:
+            return {}
+        logging.debug('Fetching %d releases of %s', len(versions), package_name)
+        versions_data = [self.release_data(package_name, v) for v in versions]
+        return {
+            'missing_versions': versions_data,
+            'latest_version': incoming_versions[0],
+        }
+
+    def changes(self, since):
+        logging.info('Syncing packages since: %s', since)
+        timestamp = datetime_to_time(since)
+        changes = self.changelog(timestamp)
+        new_packages = set()
+        new_releases = set()
+        for package_name, version, timestamp, action in changes:
+            if action == 'create':
+                new_packages.add(package_name)
+            if action == 'new release':
+                new_packages.add(package_name)
+                new_releases.add(package_name)
+        logging.info('New packages: %d', len(new_packages))
+        logging.info('Packages with new releases: %d', len(new_releases))
+        return {'new_packages': new_packages, 'new_releases': new_releases}
+
 
 class PackagesImporter(object):
     """Class encapsulating importing logic"""
@@ -43,9 +75,24 @@ class PackagesImporter(object):
     def sync_all_packages(self):
         """Saves all packages names"""
         saved = Package.objects.all_package_names()
-        incoming = self.client.list_packages()
-        names = missing(saved, incoming)
+        names = self.client.missing_packages(saved)
+        return self._create_packages(names)
 
+    def sync_package(self, package):
+        known = package.versions()
+        version_data = self.client.missing_version_data(package.name, known)
+        return self._save_package_releases(package, version_data)
+
+    def sync_changed(self, since):
+        changes = self.client.changes(since)
+        packages_created = self._create_packages(changes['new_packages'])
+        packages = Package.objects.filter(name__in=changes['new_releases'])
+        releases = 0
+        for package in packages:
+            releases += self.sync_package(package)
+        return {'new_releases': releases, 'new_packages': packages_created}
+
+    def _create_packages(self, names):
         packages = []
         for name in names:
             form = PackageForm(data={'name': name})
@@ -54,56 +101,21 @@ class PackagesImporter(object):
         Package.objects.bulk_create(packages)
         return len(names)
 
-    def sync_package(self, package):
-        saved_versions = package.versions()
-        incoming_versions = self.client.package_releases(package.name)
-        versions = missing(saved_versions, incoming_versions)
-        logger.info('Syncing "%s", %d new releases', package, len(versions))
-        if not versions:
+    def _save_package_releases(self, package, version_data):
+        if not version_data:
             return 0
-        version_data = [self.client.release_data(package.name, version)
-                for version in versions]
-
+        missing_versions = version_data['missing_versions']
         releases = []
-        for data in version_data:
+        for data in missing_versions:
             form = PackageReleaseForm(data=data)
             if form.is_valid():
                 release = form.save(commit=False)
                 release.package = package
                 releases.append(release)
         package.releases.bulk_create(releases)
-        package.latest_version = versions[0]
+        package.latest_version = version_data['latest_version']
         package.save()
         return len(releases)
-
-    def sync_changed(self, since):
-        logging.info('Syncing packages since: %s', since)
-        timestamp = datetime_to_time(since)
-        changes = self.client.changelog(timestamp)
-        new_packages = set()
-        new_releases = set()
-        for package_name, version, timestamp, action in changes:
-            if action == 'create':
-                new_packages.add(package_name)
-            if action == 'new release':
-                new_packages.add(package_name)
-                new_releases.add(package_name)
-
-        logging.info('New packages: %d', len(new_packages))
-        logging.info('Packages with new releases: %d', len(new_releases))
-        packages = []
-        for name in new_packages:
-            form = PackageForm(data={'name': name})
-            if form.is_valid():
-                packages.append(form.save(commit=False))
-        Package.objects.bulk_create(packages)
-
-        releases = 0
-        for package_name in new_releases:
-            package = Package.objects.get(name=package_name)
-            releases += self.sync_package(package)
-
-        return {'new_releases': releases, 'new_packages': len(packages)}
 
 
 def missing(old, new):
