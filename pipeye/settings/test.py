@@ -15,9 +15,6 @@ DATABASES = {
 # No migrations needed in tests
 SOUTH_TESTS_MIGRATE = False
 
-# Uncomment this when it becomes needed
-# DEFAULT_FILE_STORAGE = 'inmemorystorage.InMemoryStorage'
-
 # Use fast hashers
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
@@ -26,3 +23,19 @@ PASSWORD_HASHERS = (
 
 GITHUB_APP_ID = 'app_id'
 GITHUB_API_SECRET = 'api_secret'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+        },
+    }
+}
