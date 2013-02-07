@@ -68,6 +68,12 @@ class PackageReleaseChange(models.Model):
     release = models.ForeignKey(PackageRelease, related_name='+')
     timestamp = models.DateTimeField(default=timezone.now)
 
+    def __unicode__(self):
+        return u'%s - %s' % (self.package.name, self.release.version)
+
 
 class PackageImport(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
+
+    def __unicode__(self):
+        return unicode(self.timestamp)

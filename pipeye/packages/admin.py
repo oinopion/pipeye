@@ -20,6 +20,7 @@ class PackageAdmin(admin.ModelAdmin):
     list_filter = (FirstLetterFilter,)
     ordering = ('name',)
     search_fields = ('name',)
+    raw_id_fields = ('latest_release',)
 
 
 class PackageReleaseAdmin(admin.ModelAdmin):
@@ -29,7 +30,19 @@ class PackageReleaseAdmin(admin.ModelAdmin):
     search_fields = ('package__name', 'version')
 
 
+class PackageReleaseChangeAdmin(admin.ModelAdmin):
+    list_display = ('package', 'release', 'timestamp')
+    search_fields = ('package__name', 'release__version')
+    date_hierarchy = 'timestamp'
+    raw_id_fields = ('package', 'release')
+
+
+class PackageImportAdmin(admin.ModelAdmin):
+    list_display = ('timestamp',)
+    date_hierarchy = 'timestamp'
+
+
 admin.site.register(Package, PackageAdmin)
 admin.site.register(PackageRelease, PackageReleaseAdmin)
-admin.site.register(PackageReleaseChange)
-admin.site.register(PackageImport)
+admin.site.register(PackageReleaseChange, PackageReleaseChangeAdmin)
+admin.site.register(PackageImport, PackageImportAdmin)
