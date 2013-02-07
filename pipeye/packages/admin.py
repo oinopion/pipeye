@@ -1,7 +1,7 @@
 import string
 from django.contrib import admin
 from django.contrib.admin.filters import SimpleListFilter
-from .models import Package, PackageRelease
+from .models import Package, PackageRelease, PackageImport, PackageReleaseChange
 
 class FirstLetterFilter(SimpleListFilter):
     title = 'first letter'
@@ -31,4 +31,5 @@ class PackageReleaseAdmin(admin.ModelAdmin):
 
 admin.site.register(Package, PackageAdmin)
 admin.site.register(PackageRelease, PackageReleaseAdmin)
-
+admin.site.register(PackageReleaseChange)
+admin.site.register(PackageImport)

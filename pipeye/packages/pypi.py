@@ -1,7 +1,10 @@
 import time
+import logging
 import xmlrpclib
 from .models import Package
 from .forms import PackageForm, PackageReleaseForm
+
+logger = logging.getLogger(__name__)
 
 
 class PypiClient(object):
@@ -55,6 +58,7 @@ class PackagesImporter(object):
         saved_versions = package.versions()
         incoming_versions = self.client.package_releases(package.name)
         versions = missing(saved_versions, incoming_versions)
+        logger.info('Syncing "%s", %d new releases', package, len(versions))
         if not versions:
             return 0
         version_data = [self.client.release_data(package.name, version)
@@ -73,6 +77,7 @@ class PackagesImporter(object):
         return len(releases)
 
     def sync_changed(self, since):
+        logging.info('Syncing packages since: %s', since)
         timestamp = datetime_to_time(since)
         changes = self.client.changelog(timestamp)
         new_packages = set()
@@ -84,6 +89,8 @@ class PackagesImporter(object):
                 new_packages.add(package_name)
                 new_releases.add(package_name)
 
+        logging.info('New packages: %d', len(new_packages))
+        logging.info('Packages with new releases: %d', len(new_releases))
         packages = []
         for name in new_packages:
             form = PackageForm(data={'name': name})
