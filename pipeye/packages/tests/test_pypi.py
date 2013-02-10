@@ -40,10 +40,10 @@ class ImporterAllPackagesTest(BaseImporterTest):
     def test_saves_all(self):
         self.importer.sync_all_packages()
         all_names = set(Package.objects.all_package_names())
-        expect(all_names) == set(self.client.list_packages())
+        expect(all_names) == set(StubProxy.packages)
 
     def test_returns_number_of_packages_added(self):
-        expect(self.importer.sync_all_packages()) == len(self.client.list_packages())
+        expect(self.importer.sync_all_packages()) == len(StubProxy.packages)
 
 
 class ImporterPackageSyncTest(BaseImporterTest):
@@ -54,11 +54,11 @@ class ImporterPackageSyncTest(BaseImporterTest):
     def test_fetches_all_releases(self):
         self.importer.sync_package(self.package)
         versions = set(self.package.versions())
-        expect(versions) == set(self.client.package_releases(''))
+        expect(versions) == set(StubProxy.releases)
 
     def test_sets_latest_version(self):
         self.importer.sync_package(self.package)
-        expect(self.package.latest_version) == self.client.package_releases('')[0]
+        expect(self.package.latest_version) == StubProxy.releases[0]
 
     def test_does_not_set_latest_version_if_not_versions(self):
         self.client.proxy.package_releases = mock.Mock(return_value=[])
@@ -67,7 +67,7 @@ class ImporterPackageSyncTest(BaseImporterTest):
 
     def test_returns_number_of_fetched_versions(self):
         imported = self.importer.sync_package(self.package)
-        expect(imported) == len(self.client.package_releases(''))
+        expect(imported) == len(StubProxy.releases)
 
 
 class ImporterSyncChangedTest(BaseImporterTest):
@@ -77,7 +77,7 @@ class ImporterSyncChangedTest(BaseImporterTest):
     def test_imports_package_releases_on_new_release(self):
         spam = PackageFactory.create(name='spam')
         self.importer.sync_changed(timezone.now())
-        expect(set(spam.versions())) == set(self.client.package_releases(''))
+        expect(set(spam.versions())) == set(StubProxy.releases)
 
     def test_imports_package_on_create(self):
         self.importer.sync_changed(timezone.now())
@@ -116,12 +116,15 @@ class MissingTest(TestCase):
 
 
 class StubProxy(object):
+    packages = ['bacon', 'spam', 'eggs']
+    releases = ['1.5', '1.0', '0.9', '0.5']
+
     def list_packages(self):
-        return ['bacon', 'spam', 'eggs']
+        return list(self.packages)
 
     def package_releases(self, package):
         expect(package).isinstance(basestring)
-        return ['1.5', '1.0', '0.9', '0.5']
+        return list(self.releases)
 
     def release_data(self, package, version):
         expect(package).isinstance(basestring)

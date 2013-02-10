@@ -17,33 +17,33 @@ class PypiClient(object):
     def __init__(self):
         self.proxy = xmlrpclib.ServerProxy(self.PYPI_URL)
 
-    def list_packages(self):
+    def _list_packages(self):
         """Returns list of strings with all package names"""
         return self.proxy.list_packages()
 
-    def package_releases(self, package_name):
+    def _package_releases(self, package_name):
         """Returns list of strings with all releases of package"""
         return self.proxy.package_releases(package_name)
 
-    def release_data(self, package_name, version):
+    def _release_data(self, package_name, version):
         """Returns dictionary with data for one release"""
         return self.proxy.release_data(package_name, version)
 
-    def changelog(self, since):
+    def _changelog(self, since):
         """Returns list of 4-tuples with PyPI changes"""
         return self.proxy.changelog(since)
 
     def missing_packages(self, known):
-        incoming = self.list_packages()
+        incoming = self._list_packages()
         return missing(known, incoming)
 
     def missing_version_data(self, package_name, known_versions):
-        incoming_versions = self.package_releases(package_name)
+        incoming_versions = self._package_releases(package_name)
         versions = missing(known_versions, incoming_versions)
         if not versions:
             return {}
         logging.debug('Fetching %d releases of %s', len(versions), package_name)
-        versions_data = [self.release_data(package_name, v) for v in versions]
+        versions_data = [self._release_data(package_name, v) for v in versions]
         return {
             'missing_versions': versions_data,
             'latest_version': incoming_versions[0],
@@ -52,7 +52,7 @@ class PypiClient(object):
     def changes(self, since):
         logging.info('Syncing packages since: %s', since)
         timestamp = datetime_to_time(since)
-        changes = self.changelog(timestamp)
+        changes = self._changelog(timestamp)
         new_packages = set()
         new_releases = set()
         for package_name, version, timestamp, action in changes:
