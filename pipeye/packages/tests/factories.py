@@ -1,5 +1,5 @@
 import factory
-from ..models import PackageRelease, Package
+from ..models import PackageRelease, Package, PackageReleaseChange
 
 package_name_gen = lambda n: u'package-%s' % n
 version_gen = lambda n: u'1.%s' % n
@@ -25,3 +25,13 @@ class PackageReleaseDataFactory(factory.Factory):
 
 class PackageReleaseFactory(PackageReleaseDataFactory):
     package = factory.SubFactory(PackageFactory)
+
+
+class PackageReleaseChangeFactory(factory.Factory):
+    FACTORY_FOR = PackageReleaseChange
+    package = factory.SubFactory(PackageFactory)
+
+    @factory.lazy_attribute
+    def release(change):
+        return PackageReleaseFactory.create(package=change.package)
+
