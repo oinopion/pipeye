@@ -1,7 +1,7 @@
-from datetime import timedelta
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from pipeye.packages.models import Package
 
 
 def mailout_choice(h):
@@ -37,4 +37,11 @@ def users_for_mailout(mailout_time):
     qs = User.objects.all()
     qs = qs.filter(watchsettings__preferred_mailout_time=preferred_hour)
     qs = qs.filter(watch__package__changes__timestamp__gte=last_mailout)
-    return qs.distinct()
+    return qs.distinct().select_related('watchsettings')
+
+
+def changed_for_user(user):
+    qs = Package.objects.filter(watch__user=user)
+    qs = qs.filter(changes__timestamp__gte=user.watchsettings.last_mailout)
+    return qs.distinct().select_related('latest_version')
+

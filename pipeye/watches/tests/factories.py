@@ -13,4 +13,4 @@ class WatchFactory(factory.Factory):
 class WatchSettingsFactory(factory.Factory):
     FACTORY_FOR = WatchSettings
     user = factory.SubFactory(UserFactory)
-    preferred_mailout_time = WatchSettings.MAILOUT_CHOICES[0]
+    preferred_mailout_time = WatchSettings.MAILOUT_CHOICES[0][0]

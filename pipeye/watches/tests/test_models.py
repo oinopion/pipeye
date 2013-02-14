@@ -2,10 +2,11 @@ from datetime import datetime, timedelta
 from django.test import TestCase
 from django.utils import timezone
 from expecter import expect
-from pipeye.packages.tests.factories import PackageFactory, PackageReleaseFactory
-from ..models import users_for_mailout
+from pipeye.utils.factories import UserFactory
+from pipeye.packages.tests.factories import PackageFactory,\
+    PackageReleaseFactory, PackageReleaseChangeFactory
+from ..models import users_for_mailout, changed_for_user
 from .factories import WatchSettingsFactory, WatchFactory
-
 
 
 class UserForMailoutTest(TestCase):
@@ -56,3 +57,38 @@ class UserForMailoutTest(TestCase):
         user = settings.user
         WatchFactory.create(user=user, package=package)
         return user
+
+
+class ChangesForUserTest(TestCase):
+    def setUp(self):
+        self.user = UserFactory.create()
+        WatchSettingsFactory.create(user=self.user)
+
+    def test_gets_user_watched_packages(self):
+        watched = self.changed_package()
+        not_watched = self.changed_package(watched=False)
+        packages = changed_for_user(self.user)
+        expect(packages).contains(watched)
+        expect(packages).does_not_contain(not_watched)
+
+    def test_gets_updated_packages(self):
+        updated = self.changed_package()
+        not_updated = PackageFactory.create()
+        WatchFactory.create(user=self.user, package=not_updated)
+        packages = changed_for_user(self.user)
+        expect(packages).contains(updated)
+        expect(packages).does_not_contain(not_updated)
+
+    def test_gets_distinct_packages(self):
+        package = self.changed_package()
+        PackageReleaseChangeFactory.create(package=package)
+        packages = changed_for_user(self.user)
+        expect(len(packages)) == 1
+
+    def changed_package(self, watched=True):
+        package = PackageFactory.create()
+        package.latest_release = PackageReleaseFactory.create(package=package)
+        package.save()
+        if watched:
+            WatchFactory.create(user=self.user, package=package)
+        return package
