@@ -1,5 +1,5 @@
 from django.contrib import admin
-from pipeye.watches.models import Watch
+from pipeye.watches.models import Watch, WatchSettings
 
 
 class WatchAdmin(admin.ModelAdmin):
@@ -9,5 +9,10 @@ class WatchAdmin(admin.ModelAdmin):
     raw_id_fields = ('user', 'package')
     ordering = ('-created', )
 
-
 admin.site.register(Watch, WatchAdmin)
+
+
+class WatchSettingsAdmin(admin.ModelAdmin):
+    list_display = ('user', 'preferred_mailout_time', 'last_mailout')
+
+admin.site.register(WatchSettings, WatchSettingsAdmin)

@@ -16,13 +16,15 @@ class Mailout(object):
         self.manager = manager or MailoutManager()
 
     def send(self):
-        for user in self.manager.users_for_mailout(self.mailout_time):
+        users = self.manager.users_for_mailout(self.mailout_time)
+        for user in users:
             self.send_for_user(user)
+        return len(users)
 
     def send_for_user(self, user):
         context = {'packages': self.manager.changed_for_user(user)}
         message = render_to_string('watches/emails/changes.txt', context)
         user.email_user(u'Packages changed', message)
         user.watchsettings.last_mailout = self.mailout_time
-        user.save()
+        user.watchsettings.save()
 
