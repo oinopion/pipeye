@@ -3,6 +3,7 @@ psycopg2==2.4.6
 South==0.7.6
 gunicorn==0.17.2
 pytz==2012j
+dj-database-url==0.2.1
 django-compressor==1.2
 django-discover-runner==0.2.2
 django-social-auth==0.7.18
