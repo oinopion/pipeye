@@ -13,6 +13,10 @@ middleware here, or combine a Django application with an application of another
 framework.
 
 """
+import os
+import sef
+secrets = os.path.join(os.path.dirname(__name__), '..', '.secrets')
+sef.set_defaults(secrets)
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION

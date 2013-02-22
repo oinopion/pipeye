@@ -14,3 +14,4 @@ expecter==0.2.2
 factory-boy==1.2.0
 jsmin==2.0.2
 cssmin==0.1.4
+sef==0.9
