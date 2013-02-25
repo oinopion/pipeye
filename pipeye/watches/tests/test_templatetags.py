@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.template import Template, Context
+from django.test.client import RequestFactory
 from expecter import expect
 from pipeye.packages.tests.factories import PackageFactory
 from pipeye.utils.factories import UserFactory
@@ -10,6 +11,7 @@ class WatchButtonTagTest(TestCase):
 
     def render(self, context):
         template = Template(self.TAG_HTML)
+        context['request'] = RequestFactory().get('/')
         return template.render(Context(context))
 
     def test_displays_watch_button(self):

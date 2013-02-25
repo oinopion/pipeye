@@ -1,4 +1,8 @@
-<form action="{{ action }}" method="post">
-  {% csrf_token %}
-  <button type="submit" class="btn btn-info">{{ text }}</button>
-</form>
+{% if user.is_authenticated %}
+  <form action="{{ action }}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-info">{{ text }}</button>
+  </form>
+{% else %}
+  <a href="{{ action }}" class="btn btn-info">{{ text }}</a>
+{% endif %}

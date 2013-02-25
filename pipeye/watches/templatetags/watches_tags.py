@@ -7,8 +7,13 @@ register = template.Library()
 @register.inclusion_tag('watches/_watch_button.html', takes_context=True)
 def watch_button(context, package):
     user = context['user']
-    if package.watch_set.filter(user=user).exists():
-        action, text = url('delete_watch', package), 'Stop watching this package'
+    next = context['request'].path
+    if user.is_authenticated():
+        if package.watch_set.filter(user=user).exists():
+            action, text = url('delete_watch', package.pk), 'Stop watching this package'
+        else:
+            action, text = url('create_watch', package.pk), 'Watch this package'
     else:
-        action, text = url('create_watch', package), 'Watch this package'
-    return {'action': action, 'text': text}
+        action = url('login') + '?next=' + next
+        text = 'Log in to watch this package'
+    return {'action': action, 'text': text, 'user': user}
