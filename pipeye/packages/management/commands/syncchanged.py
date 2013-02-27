@@ -2,7 +2,8 @@ from datetime import timedelta
 from django.core.management.base import NoArgsCommand
 from django.utils import timezone
 from ...models import PackageImport
-from ...pypi import PackagesImporter, datetime_to_time
+from ...pypi import PackagesImporter
+
 
 class Command(NoArgsCommand):
     help = 'Synchronizes packages using PyPI changelog'
@@ -22,4 +23,3 @@ class Command(NoArgsCommand):
         except PackageImport.DoesNotExist:
             yesterday = timezone.now() - timedelta(days=1)
             return yesterday
-

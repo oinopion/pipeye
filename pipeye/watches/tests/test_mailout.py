@@ -1,13 +1,12 @@
 from datetime import datetime
-from django.contrib.auth.models import User
 from django.core import mail
 from django.test import TestCase
 from django.utils import timezone
 from expecter import expect
-from pipeye.utils.factories import UserFactory
+from pipeye.accounts.factories import UserFactory
+from pipeye.accounts.models import User
 from pipeye.packages.tests.factories import PackageFactory
 from ..mailout import Mailout
-from pipeye.watches.tests.factories import WatchSettingsFactory
 
 
 class MailoutTest(TestCase):
@@ -23,12 +22,12 @@ class MailoutTest(TestCase):
     def test_saves_last_mailout_time(self):
         self.mailout.send()
         for user in self.manager.users:
-            expect(user.watchsettings.last_mailout) == self.mailout_time
+            expect(user.last_mailout) == self.mailout_time
 
 
 class FakeManager(object):
     def __init__(self):
-        self.users = [w.user for w in WatchSettingsFactory.create_batch(2)]
+        self.users = UserFactory.create_batch(2)
         self.changed_packages = PackageFactory.build_batch(3)
 
     def users_for_mailout(self, mailout_time):

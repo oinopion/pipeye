@@ -2,11 +2,11 @@ from datetime import datetime, timedelta
 from django.test import TestCase
 from django.utils import timezone
 from expecter import expect
-from pipeye.utils.factories import UserFactory
+from pipeye.accounts.factories import UserFactory
 from pipeye.packages.tests.factories import PackageFactory,\
     PackageReleaseFactory, PackageReleaseChangeFactory
 from ..models import users_for_mailout, changed_for_user
-from .factories import WatchSettingsFactory, WatchFactory
+from .factories import WatchFactory
 
 
 class UserForMailoutTest(TestCase):
@@ -50,11 +50,10 @@ class UserForMailoutTest(TestCase):
             package = self.changed_package()
         if not last_mailout:
             last_mailout = self.mailout - timedelta(days=1)
-        settings = WatchSettingsFactory.create(
+        user = UserFactory.create(
             preferred_mailout_time=preferred_mailout_time,
             last_mailout=last_mailout
         )
-        user = settings.user
         WatchFactory.create(user=user, package=package)
         return user
 
@@ -62,7 +61,6 @@ class UserForMailoutTest(TestCase):
 class ChangesForUserTest(TestCase):
     def setUp(self):
         self.user = UserFactory.create()
-        WatchSettingsFactory.create(user=self.user)
 
     def test_gets_user_watched_packages(self):
         watched = self.changed_package()

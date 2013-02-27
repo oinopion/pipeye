@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     'gunicorn',
     'compressor',
     'social_auth',
+    'pipeye.accounts',
     'pipeye.packages',
     'pipeye.watches',
 )
@@ -86,6 +87,9 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.github.GithubBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+AUTH_USER_MODEL = 'accounts.User'
+SOCIAL_AUTH_USER_MODEL = AUTH_USER_MODEL
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
@@ -107,12 +111,17 @@ COMPRESS_PRECOMPILERS = (
 # social-auth settings
 LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGIN_ERROR_URL = '/error'
 SOCIAL_AUTH_COMPLETE_URL_NAME = 'login_complete'
 
 
 # Testing settings
 TEST_RUNNER = 'discover_runner.DiscoverRunner'
 TEST_DISCOVER_TOP_LEVEL = ROOT
+
+SOUTH_MIGRATION_MODULES = {
+    'social_auth': 'pipeye.utils.migrations.social_auth',
+}
 
 # A sample logging configuration.
 LOGGING = {

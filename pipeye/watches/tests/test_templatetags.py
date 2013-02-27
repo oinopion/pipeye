@@ -3,7 +3,7 @@ from django.template import Template, Context
 from django.test.client import RequestFactory
 from expecter import expect
 from pipeye.packages.tests.factories import PackageFactory
-from pipeye.utils.factories import UserFactory
+from pipeye.accounts.factories import UserFactory
 from pipeye.watches.tests.factories import WatchFactory
 
 class WatchButtonTagTest(TestCase):

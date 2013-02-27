@@ -1,10 +1,10 @@
 import factory
-from django.contrib.auth.models import User
+from pipeye.accounts.models import User
 
 username_gen = lambda n: u'user_%s' % n
 
+
 class UserFactory(factory.Factory):
-    """Creates auth.User with password same as username"""
     FACTORY_FOR = User
     username = factory.Sequence(username_gen)
 

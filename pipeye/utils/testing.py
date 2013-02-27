@@ -1,6 +1,6 @@
 from django.test import TestCase
 from expecter import expect
-from .factories import UserFactory
+from pipeye.accounts import factories
 
 
 class ViewTestCase(TestCase):
@@ -19,7 +19,7 @@ class ViewTestCase(TestCase):
 
     def login(self, user=None):
         if not user:
-            user = UserFactory.create()
+            user = factories.UserFactory.create()
         name = user.username
         # in tests all users have password set to their username
         self.client.login(username=name, password=name)
