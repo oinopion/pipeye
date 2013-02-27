@@ -17,9 +17,10 @@
 <div class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <a class="brand" href="/">Pipeye</a>
+      <a class="brand" href="{% url 'home' %}">Pipeye</a>
       <ul class="nav">
-        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'watches_list' %}">Watches</a></li>
       </ul>
       <ul class="nav pull-right">
         {% if user.is_authenticated %}
