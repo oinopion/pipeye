@@ -1,6 +1,6 @@
 import expecter
 from django.test import TestCase
-from pipeye.accounts import factories
+from pipeye.accounts.tests import factories
 
 
 class ViewTestCase(TestCase):

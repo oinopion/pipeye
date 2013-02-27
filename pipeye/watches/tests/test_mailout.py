@@ -3,7 +3,7 @@ from django.core import mail
 from django.test import TestCase
 from django.utils import timezone
 from expecter import expect
-from pipeye.accounts.factories import UserFactory
+from pipeye.accounts.tests.factories import UserFactory
 from pipeye.accounts.models import User
 from pipeye.packages.tests.factories import PackageFactory
 from ..mailout import Mailout

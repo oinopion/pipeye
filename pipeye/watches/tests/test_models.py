@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from django.test import TestCase
 from django.utils import timezone
 from expecter import expect
-from pipeye.accounts.factories import UserFactory
+from pipeye.accounts.tests.factories import UserFactory
 from pipeye.packages.tests.factories import PackageFactory,\
     PackageReleaseFactory, PackageReleaseChangeFactory
 from ..models import users_for_mailout, changed_for_user

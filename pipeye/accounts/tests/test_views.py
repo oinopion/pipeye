@@ -1,5 +1,5 @@
 from expecter import expect
-from pipeye.accounts.factories import UserFactory
+from pipeye.accounts.tests.factories import UserFactory
 from pipeye.utils.testing import ViewTestCase
 from pipeye.utils.urls import url_lazy
 
