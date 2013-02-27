@@ -25,7 +25,7 @@ class PackageSearchView(generic.ListView):
 
     @property
     def query(self):
-        return self.request.GET.get('q')
+        return self.request.GET.get('q', '')
 
     def get_context_data(self, **kwargs):
         context = super(PackageSearchView, self).get_context_data(**kwargs)
