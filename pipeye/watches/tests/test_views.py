@@ -10,7 +10,7 @@ class WatchesListViewTest(ViewTestCase):
     url = url_lazy('watches_list')
 
     def test_requires_login(self):
-        self.assertRequiresLogin()
+        self.assert_requires_login()
 
     def test_displays_only_user_watches(self):
         user = self.login()
@@ -31,7 +31,7 @@ class CreateWatchViewTest(ViewTestCase):
         return url('create_watch', self.package.name)
 
     def test_requires_login(self):
-        self.assertRequiresLogin()
+        self.assert_requires_login()
 
     def test_creates_watch(self):
         user = self.login()
@@ -57,7 +57,7 @@ class DeleteWatchViewTest(ViewTestCase):
         return url('delete_watch', self.package.name)
 
     def test_requires_login(self):
-        self.assertRequiresLogin()
+        self.assert_requires_login()
 
     def test_deletes_watch(self):
         watch = WatchFactory.create(user=self.login())

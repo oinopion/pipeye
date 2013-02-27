@@ -1,10 +1,10 @@
-from django.core.urlresolvers import reverse
-from django.test import TestCase
+from expecter import expect
+from pipeye.utils.testing import ViewTestCase
+from pipeye.utils.urls import url_lazy
 
-class HomeViewTest(TestCase):
-    def get(self):
-        url = reverse('home')
-        return self.client.get(url)
+
+class HomeViewTest(ViewTestCase):
+    url = url_lazy('home')
 
     def test_renders_template(self):
         resp = self.get()
@@ -12,4 +12,4 @@ class HomeViewTest(TestCase):
 
     def test_response_is_ok(self):
         resp = self.get()
-        self.assertEqual(200, resp.status_code)
+        expect(resp).is_success()

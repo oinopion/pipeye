@@ -1,5 +1,5 @@
+import expecter
 from django.test import TestCase
-from expecter import expect
 from pipeye.accounts import factories
 
 
@@ -25,6 +25,16 @@ class ViewTestCase(TestCase):
         self.client.login(username=name, password=name)
         return user
 
-    def assertRequiresLogin(self):
+    def assert_requires_login(self):
         resp = self.get(follow=False)
-        expect(resp.status_code) == 302
+        expecter.expect(resp).is_redirect()
+
+
+def is_success(response):
+    return response.status_code == 200
+expecter.add_expectation(is_success)
+
+
+def is_redirect(response):
+    return response.status_code == 302
+expecter.add_expectation(is_redirect)
