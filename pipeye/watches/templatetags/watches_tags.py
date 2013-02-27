@@ -10,9 +10,9 @@ def watch_button(context, package):
     next = context['request'].path
     if user.is_authenticated():
         if package.watch_set.filter(user=user).exists():
-            action, text = url('delete_watch', package.pk), 'Stop watching this package'
+            action, text = url('delete_watch', package.name), 'Stop watching this package'
         else:
-            action, text = url('create_watch', package.pk), 'Watch this package'
+            action, text = url('create_watch', package.name), 'Watch this package'
     else:
         action = url('login') + '?next=' + next
         text = 'Log in to watch this package'
