@@ -8,11 +8,13 @@ TEMPLATE_DEBUG = DEBUG
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DATABASES = {
-    'default': dj_database_url.parse('postgres://localhost/pipeye')
+    'default': dj_database_url.parse('postgres:///pipeye')
 }
 
+SECRET_KEY = 'devel'
+
 MIDDLEWARE_CLASSES += (
-#    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)
@@ -23,7 +25,7 @@ INSTALLED_APPS += (
 
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
-    'ENABLE_STACKTRACES' : False,
+    'ENABLE_STACKTRACES': False,
 }
 
 try:

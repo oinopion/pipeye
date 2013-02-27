@@ -23,6 +23,7 @@ PASSWORD_HASHERS = (
 
 GITHUB_APP_ID = 'app_id'
 GITHUB_API_SECRET = 'api_secret'
+SECRET_KEY = 'secret'
 
 LOGGING = {
     'version': 1,

@@ -1,13 +1,13 @@
-Django==1.4.3
+Django==1.5
 psycopg2==2.4.6
 South==0.7.6
 gunicorn==0.17.2
 pytz==2012j
 dj-database-url==0.2.1
 django-compressor==1.2
-django-discover-runner==0.2.2
-django-social-auth==0.7.18
-django-braces==0.2.2
+django-discover-runner==0.3
+django-social-auth==0.7.20
+django-braces==0.2.3
 hurl==2.0
 mock==1.0.1
 expecter==0.2.2
