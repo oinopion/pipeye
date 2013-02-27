@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="{% url 'preferences_view' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+    <button class="btn btn-primary" type="submit">save</button>
+    </form>
+{% endblock %}

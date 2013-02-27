@@ -8,6 +8,8 @@ urlpatterns = patterns('',
     url(r'^$', 'pipeye.views.home', name='home'),
     url(r'^watches/', include('pipeye.watches.urls')),
     url(r'^packages/', include('pipeye.packages.urls')),
+    url(r'^accounts/', include('pipeye.accounts.urls')),
+
 
     # github login
     url(r'^login/$', 'social_auth.views.auth',
