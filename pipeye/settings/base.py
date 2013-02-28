@@ -79,6 +79,7 @@ INSTALLED_APPS = (
     'compressor',
     'social_auth',
     'pipeye.accounts',
+    'pipeye.utils',
     'pipeye.packages',
     'pipeye.watches',
 )
