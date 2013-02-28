@@ -36,16 +36,16 @@ class CreateWatchViewTest(ViewTestCase):
     def test_creates_watch(self):
         user = self.login()
         resp = self.post()
-        expect(resp.status_code)  == 302
+        expect(resp).is_redirect()
         qs = Watch.objects.filter(user=user, package=self.package)
         expect(qs.exists()) == True
 
-    def test_is_indempotent(self):
+    def test_is_idempotent(self):
         watch = WatchFactory.create()
         self.login(watch.user)
         self.package = watch.package
         resp = self.post()
-        expect(resp.status_code) == 302
+        expect(resp).is_redirect()
 
 
 class DeleteWatchViewTest(ViewTestCase):
