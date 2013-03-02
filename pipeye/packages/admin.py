@@ -16,7 +16,7 @@ class FirstLetterFilter(SimpleListFilter):
 
 
 class PackageAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'latest_release')
     list_filter = (FirstLetterFilter,)
     ordering = ('name',)
     search_fields = ('name',)
