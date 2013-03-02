@@ -4,6 +4,7 @@ from django.utils.html import escape
 
 register = template.Library()
 
+
 @register.simple_tag(takes_context=True)
 def qs(context, path=None, defaults=None, **query_params):
     if isinstance(path, dict):

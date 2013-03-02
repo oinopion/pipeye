@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load pagination_tags %}
 
 {% block content %}
   {% include 'packages/_package_search_form.html' %}
@@ -8,4 +9,7 @@
       <li><a href="{% url 'package_detail' package.name %}">{{ package }}</a></li>
     {% endfor %}
   </ul>
+
+  {% url 'package_search' as search_url %}
+  {% pagination page_obj search_url q=query %}
 {% endblock %}

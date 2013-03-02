@@ -1,0 +1,44 @@
+{% load url_tags %}
+
+<div class="pagination">
+  <ul>
+    {% if page.has_previous %}
+      {% with prev=page.previous_page_number %}
+        <li><a href="{% qs url params page=prev %}">&laquo;</a></li>
+      {% endwith %}
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+
+    {% if show_first %}
+      <li><a href="{% qs url params page=1 %}">1</a></li>
+      <li><span class="disabled">&hellip;</span></li>
+    {% endif %}
+
+    {% for page_num in page_range %}
+      {% if page_num == page.number %}
+        <li class="active">
+            <a href="{% qs url params page=page_num %}">{{ page_num }}</a>
+        </li>
+      {% else %}
+        <li>
+            <a href="{% qs url params page=page_num %}">{{ page_num }}</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if show_last %}
+      <li><span class="disabled">&hellip;</span></li>
+      <li><a href="{% qs url params page=paginator.num_pages %}"
+              >{{ paginator.num_pages }}</a></li>
+    {% endif %}
+
+    {% if page.has_next %}
+        {% with next=page.next_page_number %}
+          <li><a href="{% qs url params page=next %}">&raquo;</a></li>
+        {% endwith %}
+    {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+</div>

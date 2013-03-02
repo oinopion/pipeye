@@ -13,6 +13,7 @@ package_detail = PackageDetailView.as_view()
 class PackageSearchView(generic.ListView):
     allow_empty = True
     context_object_name = 'packages'
+    paginate_by = 20
     queryset = Package.objects.order_by('name')
     template_name = 'packages/search.html'
 
