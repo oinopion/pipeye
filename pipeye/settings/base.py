@@ -124,6 +124,8 @@ SOUTH_MIGRATION_MODULES = {
     'social_auth': 'pipeye.utils.migrations.social_auth',
 }
 
+FIXTURE_DIRS = (project_path('fixtures'),)
+
 # A sample logging configuration.
 LOGGING = {
     'version': 1,

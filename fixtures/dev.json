@@ -1,0 +1,717 @@
+[
+    {
+        "fields": {
+            "date_joined": "2013-03-02T13:59:50.228Z", 
+            "email": "tomek@hauru.eu", 
+            "groups": [], 
+            "is_active": true, 
+            "is_staff": true, 
+            "is_superuser": true, 
+            "last_login": "2013-03-02T14:00:24.512Z", 
+            "last_mailout": "2013-03-02T13:59:50.228Z", 
+            "password": "pbkdf2_sha256$10000$NGwFk1TNr8SA$FnmAAckiI2//vbIn/scJSt3Pl4QJtuMU+UnEq/7T7T4=", 
+            "preferred_mailout_time": 0, 
+            "user_permissions": [], 
+            "username": "admin"
+        }, 
+        "model": "accounts.user", 
+        "pk": 1
+    }, 
+    {
+        "fields": {
+            "latest_release": 1, 
+            "name": "Django"
+        }, 
+        "model": "packages.package", 
+        "pk": 1
+    }, 
+    {
+        "fields": {
+            "latest_release": 11, 
+            "name": "Flask"
+        }, 
+        "model": "packages.package", 
+        "pk": 2
+    }, 
+    {
+        "fields": {
+            "latest_release": 12, 
+            "name": "Jinja"
+        }, 
+        "model": "packages.package", 
+        "pk": 3
+    }, 
+    {
+        "fields": {
+            "latest_release": 13, 
+            "name": "Pillow"
+        }, 
+        "model": "packages.package", 
+        "pk": 4
+    }, 
+    {
+        "fields": {
+            "latest_release": 14, 
+            "name": "SQLAlchemy"
+        }, 
+        "model": "packages.package", 
+        "pk": 5
+    }, 
+    {
+        "fields": {
+            "latest_release": 15, 
+            "name": "South"
+        }, 
+        "model": "packages.package", 
+        "pk": 6
+    }, 
+    {
+        "fields": {
+            "latest_release": 16, 
+            "name": "Sphinx"
+        }, 
+        "model": "packages.package", 
+        "pk": 7
+    }, 
+    {
+        "fields": {
+            "latest_release": 17, 
+            "name": "celery"
+        }, 
+        "model": "packages.package", 
+        "pk": 8
+    }, 
+    {
+        "fields": {
+            "latest_release": 18, 
+            "name": "gevent"
+        }, 
+        "model": "packages.package", 
+        "pk": 9
+    }, 
+    {
+        "fields": {
+            "latest_release": 19, 
+            "name": "gunicorn"
+        }, 
+        "model": "packages.package", 
+        "pk": 10
+    }, 
+    {
+        "fields": {
+            "latest_release": 20, 
+            "name": "hurl"
+        }, 
+        "model": "packages.package", 
+        "pk": 11
+    }, 
+    {
+        "fields": {
+            "latest_release": 21, 
+            "name": "psycopg2"
+        }, 
+        "model": "packages.package", 
+        "pk": 12
+    }, 
+    {
+        "fields": {
+            "latest_release": 22, 
+            "name": "pytz"
+        }, 
+        "model": "packages.package", 
+        "pk": 13
+    }, 
+    {
+        "fields": {
+            "latest_release": 23, 
+            "name": "requests"
+        }, 
+        "model": "packages.package", 
+        "pk": 14
+    }, 
+    {
+        "fields": {
+            "latest_release": 24, 
+            "name": "rq"
+        }, 
+        "model": "packages.package", 
+        "pk": 15
+    }, 
+    {
+        "fields": {
+            "author": "Django Software Foundation", 
+            "author_email": "foundation@djangoproject.com", 
+            "home_page": "http://www.djangoproject.com/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 1, 
+            "package_url": "http://pypi.python.org/pypi/Django", 
+            "release_url": "http://pypi.python.org/pypi/Django/1.5", 
+            "summary": "A high-level Python Web framework that encourages rapid development and clean, pragmatic design.", 
+            "timestamp": "2013-03-02T14:03:24.247Z", 
+            "version": "1.5"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 1
+    }, 
+    {
+        "fields": {
+            "author": "Django Software Foundation", 
+            "author_email": "foundation@djangoproject.com", 
+            "home_page": "http://www.djangoproject.com/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 1, 
+            "package_url": "http://pypi.python.org/pypi/Django", 
+            "release_url": "http://pypi.python.org/pypi/Django/1.4.5", 
+            "summary": "A high-level Python Web framework that encourages rapid development and clean, pragmatic design.", 
+            "timestamp": "2013-03-02T14:03:24.248Z", 
+            "version": "1.4.5"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 2
+    }, 
+    {
+        "fields": {
+            "author": "Django Software Foundation", 
+            "author_email": "foundation@djangoproject.com", 
+            "home_page": "http://www.djangoproject.com/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 1, 
+            "package_url": "http://pypi.python.org/pypi/Django", 
+            "release_url": "http://pypi.python.org/pypi/Django/1.4.4", 
+            "summary": "A high-level Python Web framework that encourages rapid development and clean, pragmatic design.", 
+            "timestamp": "2013-03-02T14:03:24.249Z", 
+            "version": "1.4.4"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 3
+    }, 
+    {
+        "fields": {
+            "author": "Django Software Foundation", 
+            "author_email": "foundation@djangoproject.com", 
+            "home_page": "http://www.djangoproject.com/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 1, 
+            "package_url": "http://pypi.python.org/pypi/Django", 
+            "release_url": "http://pypi.python.org/pypi/Django/1.4.3", 
+            "summary": "A high-level Python Web framework that encourages rapid development and clean, pragmatic design.", 
+            "timestamp": "2013-03-02T14:03:24.250Z", 
+            "version": "1.4.3"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 4
+    }, 
+    {
+        "fields": {
+            "author": "Django Software Foundation", 
+            "author_email": "foundation@djangoproject.com", 
+            "home_page": "http://www.djangoproject.com/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 1, 
+            "package_url": "http://pypi.python.org/pypi/Django", 
+            "release_url": "http://pypi.python.org/pypi/Django/1.3.7", 
+            "summary": "A high-level Python Web framework that encourages rapid development and clean, pragmatic design.", 
+            "timestamp": "2013-03-02T14:03:24.250Z", 
+            "version": "1.3.7"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 5
+    }, 
+    {
+        "fields": {
+            "author": "Django Software Foundation", 
+            "author_email": "foundation@djangoproject.com", 
+            "home_page": "http://www.djangoproject.com/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 1, 
+            "package_url": "http://pypi.python.org/pypi/Django", 
+            "release_url": "http://pypi.python.org/pypi/Django/1.3.6", 
+            "summary": "A high-level Python Web framework that encourages rapid development and clean, pragmatic design.", 
+            "timestamp": "2013-03-02T14:03:24.251Z", 
+            "version": "1.3.6"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 6
+    }, 
+    {
+        "fields": {
+            "author": "Django Software Foundation", 
+            "author_email": "foundation@djangoproject.com", 
+            "home_page": "http://www.djangoproject.com/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 1, 
+            "package_url": "http://pypi.python.org/pypi/Django", 
+            "release_url": "http://pypi.python.org/pypi/Django/1.3.5", 
+            "summary": "A high-level Python Web framework that encourages rapid development and clean, pragmatic design.", 
+            "timestamp": "2013-03-02T14:03:24.252Z", 
+            "version": "1.3.5"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 7
+    }, 
+    {
+        "fields": {
+            "author": "Django Software Foundation", 
+            "author_email": "foundation@djangoproject.com", 
+            "home_page": "http://www.djangoproject.com/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 1, 
+            "package_url": "http://pypi.python.org/pypi/Django", 
+            "release_url": "http://pypi.python.org/pypi/Django/1.2.7", 
+            "summary": "A high-level Python Web framework that encourages rapid development and clean, pragmatic design.", 
+            "timestamp": "2013-03-02T14:03:24.252Z", 
+            "version": "1.2.7"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 8
+    }, 
+    {
+        "fields": {
+            "author": "Django Software Foundation", 
+            "author_email": "foundation@djangoproject.com", 
+            "home_page": "http://www.djangoproject.com/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 1, 
+            "package_url": "http://pypi.python.org/pypi/Django", 
+            "release_url": "http://pypi.python.org/pypi/Django/1.1.4", 
+            "summary": "A high-level Python Web framework that encourages rapid development and clean, pragmatic design.", 
+            "timestamp": "2013-03-02T14:03:24.253Z", 
+            "version": "1.1.4"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 9
+    }, 
+    {
+        "fields": {
+            "author": "Django Software Foundation", 
+            "author_email": "foundation at djangoproject com", 
+            "home_page": "http://www.djangoproject.com/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 1, 
+            "package_url": "http://pypi.python.org/pypi/Django", 
+            "release_url": "http://pypi.python.org/pypi/Django/1.0.4", 
+            "summary": "A high-level Python Web framework that encourages rapid development and clean, pragmatic design.", 
+            "timestamp": "2013-03-02T14:03:24.254Z", 
+            "version": "1.0.4"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 10
+    }, 
+    {
+        "fields": {
+            "author": "Armin Ronacher", 
+            "author_email": "armin.ronacher@active-4.com", 
+            "home_page": "http://github.com/mitsuhiko/flask/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 2, 
+            "package_url": "http://pypi.python.org/pypi/Flask", 
+            "release_url": "http://pypi.python.org/pypi/Flask/0.9", 
+            "summary": "A microframework based on Werkzeug, Jinja2 and good intentions", 
+            "timestamp": "2013-03-02T14:03:25.016Z", 
+            "version": "0.9"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 11
+    }, 
+    {
+        "fields": {
+            "author": "Armin Ronacher", 
+            "author_email": "armin.ronacher@active-4.com", 
+            "home_page": "http://jinja.pocoo.org/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 3, 
+            "package_url": "http://pypi.python.org/pypi/Jinja", 
+            "release_url": "http://pypi.python.org/pypi/Jinja/1.2", 
+            "summary": "A small but fast and easy to use stand-alone template engine written in pure python.", 
+            "timestamp": "2013-03-02T14:03:25.760Z", 
+            "version": "1.2"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 12
+    }, 
+    {
+        "fields": {
+            "author": "Alex Clark (fork author)", 
+            "author_email": "aclark@aclark.net", 
+            "home_page": "http://github.com/python-imaging/Pillow", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 4, 
+            "package_url": "http://pypi.python.org/pypi/Pillow", 
+            "release_url": "http://pypi.python.org/pypi/Pillow/1.7.8", 
+            "summary": "Python Imaging Library (fork)", 
+            "timestamp": "2013-03-02T14:03:26.808Z", 
+            "version": "1.7.8"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 13
+    }, 
+    {
+        "fields": {
+            "author": "Mike Bayer", 
+            "author_email": "mike_mp@zzzcomputing.com", 
+            "home_page": "http://www.sqlalchemy.org", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 5, 
+            "package_url": "http://pypi.python.org/pypi/SQLAlchemy", 
+            "release_url": "http://pypi.python.org/pypi/SQLAlchemy/0.7.10", 
+            "summary": "Database Abstraction Library", 
+            "timestamp": "2013-03-02T14:03:27.576Z", 
+            "version": "0.7.10"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 14
+    }, 
+    {
+        "fields": {
+            "author": "Andrew Godwin & Andy McCurdy", 
+            "author_email": "south@aeracode.org", 
+            "home_page": "http://south.aeracode.org/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 6, 
+            "package_url": "http://pypi.python.org/pypi/South", 
+            "release_url": "http://pypi.python.org/pypi/South/0.7.6", 
+            "summary": "South: Migrations for Django", 
+            "timestamp": "2013-03-02T14:03:28.247Z", 
+            "version": "0.7.6"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 15
+    }, 
+    {
+        "fields": {
+            "author": "Georg Brandl", 
+            "author_email": "georg@python.org", 
+            "home_page": "http://sphinx.pocoo.org/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 7, 
+            "package_url": "http://pypi.python.org/pypi/Sphinx", 
+            "release_url": "http://pypi.python.org/pypi/Sphinx/1.1.3", 
+            "summary": "Python documentation generator", 
+            "timestamp": "2013-03-02T14:03:28.907Z", 
+            "version": "1.1.3"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 16
+    }, 
+    {
+        "fields": {
+            "author": "Ask Solem", 
+            "author_email": "ask@celeryproject.org", 
+            "home_page": "http://celeryproject.org", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 8, 
+            "package_url": "http://pypi.python.org/pypi/celery", 
+            "release_url": "http://pypi.python.org/pypi/celery/3.0.15", 
+            "summary": "Distributed Task Queue", 
+            "timestamp": "2013-03-02T14:03:29.667Z", 
+            "version": "3.0.15"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 17
+    }, 
+    {
+        "fields": {
+            "author": "Denis Bilenko", 
+            "author_email": "denis.bilenko@gmail.com", 
+            "home_page": "http://www.gevent.org/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 9, 
+            "package_url": "http://pypi.python.org/pypi/gevent", 
+            "release_url": "http://pypi.python.org/pypi/gevent/0.13.8", 
+            "summary": "Python network library that uses greenlet and libevent for easy and scalable concurrency", 
+            "timestamp": "2013-03-02T14:03:30.430Z", 
+            "version": "0.13.8"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 18
+    }, 
+    {
+        "fields": {
+            "author": "Benoit Chesneau", 
+            "author_email": "benoitc@e-engura.com", 
+            "home_page": "http://gunicorn.org", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 10, 
+            "package_url": "http://pypi.python.org/pypi/gunicorn", 
+            "release_url": "http://pypi.python.org/pypi/gunicorn/0.17.2", 
+            "summary": "WSGI HTTP Server for UNIX", 
+            "timestamp": "2013-03-02T14:03:31.050Z", 
+            "version": "0.17.2"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 19
+    }, 
+    {
+        "fields": {
+            "author": "Tomek Paczkowski & Aleksandra Sendecka", 
+            "author_email": "tomek@hauru.eu", 
+            "home_page": "https://github.com/oinopion/hurl", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 11, 
+            "package_url": "http://pypi.python.org/pypi/hurl", 
+            "release_url": "http://pypi.python.org/pypi/hurl/2.0", 
+            "summary": "UNKNOWN", 
+            "timestamp": "2013-03-02T14:03:31.871Z", 
+            "version": "2.0"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 20
+    }, 
+    {
+        "fields": {
+            "author": "Federico Di Gregorio", 
+            "author_email": "fog@initd.org", 
+            "home_page": "http://initd.org/psycopg/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 12, 
+            "package_url": "http://pypi.python.org/pypi/psycopg2", 
+            "release_url": "http://pypi.python.org/pypi/psycopg2/2.4.6", 
+            "summary": "Python-PostgreSQL Database Adapter", 
+            "timestamp": "2013-03-02T14:03:32.657Z", 
+            "version": "2.4.6"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 21
+    }, 
+    {
+        "fields": {
+            "author": "Stuart Bishop", 
+            "author_email": "stuart@stuartbishop.net", 
+            "home_page": "http://pytz.sourceforge.net", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 13, 
+            "package_url": "http://pypi.python.org/pypi/pytz", 
+            "release_url": "http://pypi.python.org/pypi/pytz/2012j", 
+            "summary": "World timezone definitions, modern and historical", 
+            "timestamp": "2013-03-02T14:03:33.676Z", 
+            "version": "2012j"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 22
+    }, 
+    {
+        "fields": {
+            "author": "Kenneth Reitz", 
+            "author_email": "me@kennethreitz.com", 
+            "home_page": "http://python-requests.org", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 14, 
+            "package_url": "http://pypi.python.org/pypi/requests", 
+            "release_url": "http://pypi.python.org/pypi/requests/1.1.0", 
+            "summary": "Python HTTP for Humans.", 
+            "timestamp": "2013-03-02T14:03:35.245Z", 
+            "version": "1.1.0"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 23
+    }, 
+    {
+        "fields": {
+            "author": "Vincent Driessen", 
+            "author_email": "vincent@3rdcloud.com", 
+            "home_page": "https://github.com/nvie/rq/", 
+            "maintainer": "", 
+            "maintainer_email": "", 
+            "package": 15, 
+            "package_url": "http://pypi.python.org/pypi/rq", 
+            "release_url": "http://pypi.python.org/pypi/rq/0.3.7", 
+            "summary": "RQ is a simple, lightweight, library for creating background jobs, and processing them.", 
+            "timestamp": "2013-03-02T14:03:35.988Z", 
+            "version": "0.3.7"
+        }, 
+        "model": "packages.packagerelease", 
+        "pk": 24
+    }, 
+    {
+        "fields": {
+            "package": 1, 
+            "release": 1, 
+            "timestamp": "2013-03-02T14:03:24.263Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 1
+    }, 
+    {
+        "fields": {
+            "package": 2, 
+            "release": 11, 
+            "timestamp": "2013-03-02T14:03:25.023Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 2
+    }, 
+    {
+        "fields": {
+            "package": 3, 
+            "release": 12, 
+            "timestamp": "2013-03-02T14:03:25.767Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 3
+    }, 
+    {
+        "fields": {
+            "package": 4, 
+            "release": 13, 
+            "timestamp": "2013-03-02T14:03:26.816Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 4
+    }, 
+    {
+        "fields": {
+            "package": 5, 
+            "release": 14, 
+            "timestamp": "2013-03-02T14:03:27.584Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 5
+    }, 
+    {
+        "fields": {
+            "package": 6, 
+            "release": 15, 
+            "timestamp": "2013-03-02T14:03:28.255Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 6
+    }, 
+    {
+        "fields": {
+            "package": 7, 
+            "release": 16, 
+            "timestamp": "2013-03-02T14:03:28.915Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 7
+    }, 
+    {
+        "fields": {
+            "package": 8, 
+            "release": 17, 
+            "timestamp": "2013-03-02T14:03:29.675Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 8
+    }, 
+    {
+        "fields": {
+            "package": 9, 
+            "release": 18, 
+            "timestamp": "2013-03-02T14:03:30.441Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 9
+    }, 
+    {
+        "fields": {
+            "package": 10, 
+            "release": 19, 
+            "timestamp": "2013-03-02T14:03:31.057Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 10
+    }, 
+    {
+        "fields": {
+            "package": 11, 
+            "release": 20, 
+            "timestamp": "2013-03-02T14:03:31.882Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 11
+    }, 
+    {
+        "fields": {
+            "package": 12, 
+            "release": 21, 
+            "timestamp": "2013-03-02T14:03:32.669Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 12
+    }, 
+    {
+        "fields": {
+            "package": 13, 
+            "release": 22, 
+            "timestamp": "2013-03-02T14:03:33.684Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 13
+    }, 
+    {
+        "fields": {
+            "package": 14, 
+            "release": 23, 
+            "timestamp": "2013-03-02T14:03:35.254Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 14
+    }, 
+    {
+        "fields": {
+            "package": 15, 
+            "release": 24, 
+            "timestamp": "2013-03-02T14:03:35.995Z"
+        }, 
+        "model": "packages.packagereleasechange", 
+        "pk": 15
+    }, 
+    {
+        "fields": {
+            "timestamp": "2013-03-02T14:03:51Z"
+        }, 
+        "model": "packages.packageimport", 
+        "pk": 1
+    }, 
+    {
+        "fields": {
+            "created": "2013-03-02T14:04:46.453Z", 
+            "package": 1, 
+            "user": 1
+        }, 
+        "model": "watches.watch", 
+        "pk": 1
+    }, 
+    {
+        "fields": {
+            "created": "2013-03-02T14:05:00.806Z", 
+            "package": 6, 
+            "user": 1
+        }, 
+        "model": "watches.watch", 
+        "pk": 2
+    }, 
+    {
+        "fields": {
+            "created": "2013-03-02T14:05:10.331Z", 
+            "package": 15, 
+            "user": 1
+        }, 
+        "model": "watches.watch", 
+        "pk": 3
+    }
+]
