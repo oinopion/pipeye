@@ -5,7 +5,7 @@ from pipeye.utils.urls import url_lazy
 
 
 class UserPreferencesViewTest(ViewTestCase):
-    url = url_lazy('preferences_view')
+    url = url_lazy('preferences')
 
     def test_requires_login(self):
         self.assert_requires_login()

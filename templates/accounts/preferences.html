@@ -1,9 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form action="{% url 'preferences_view' %}" method="post">
+  <div class="row">
+    <div class="span6">
+      <h1>Preferences</h1>
+
+      <form action="{% url 'preferences' %}" method="post"
+          class="form-horizontal">
         {% csrf_token %}
-        {{ form }}
-    <button class="btn btn-primary" type="submit">save</button>
-    </form>
+
+        {% for field in form %}
+          <div class="control-group">
+            <label class="control-label" for="{{ field.id_for_label }}">
+              {{ field.label }}
+            </label>
+
+            <div class="controls">
+              {{ field }}
+            </div>
+          </div>
+        {% endfor %}
+
+        <div class="controls">
+          <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
 {% endblock %}

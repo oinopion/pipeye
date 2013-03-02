@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load compress %}
+{% load staticfiles %}
 
 <html>
 <head>
@@ -7,9 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pipeye</title>
   {% compress css %}
-    <link href="{{ STATIC_URL }}lib/bootstrap-2.2.2/css/bootstrap.css"
+    <link href="{% static 'lib/bootstrap-2.2.2/css/bootstrap.css' %}"
           rel="stylesheet" type="text/css"/>
-    <link href="{{ STATIC_URL }}css/base.sass"
+    <link href="{% static 'css/base.sass' %}"
           rel="stylesheet" type="text/x-sass"/>
   {% endcompress %}
 </head>
@@ -19,12 +20,12 @@
     <div class="container">
       <a class="brand" href="{% url 'home' %}">Pipeye</a>
       <ul class="nav">
-        <li><a href="{% url 'home' %}">Home</a></li>
         <li><a href="{% url 'watches_list' %}">Watches</a></li>
       </ul>
       <ul class="nav pull-right">
         {% if user.is_authenticated %}
-          <li><a href="/">{{ user.username }}</a></li>
+          <li><a href="{% url 'preferences' %}">{{ user.username }}</a></li>
+          <li><a href="{% url 'logout' %}">Log out</a></li>
         {% else %}
           <li><a href="{% url 'login' %}">Login with GitHub</a></li>
         {% endif %}

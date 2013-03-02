@@ -1,5 +1,5 @@
 import hurl
 
 urlpatterns = hurl.patterns('pipeye.accounts.views', {
-    'preferences': 'preferences_view',
+    'preferences': 'preferences',
 })

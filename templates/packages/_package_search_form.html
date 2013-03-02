@@ -1,7 +1,6 @@
 <form action="{% url 'package_search' %}" method="get">
-  <label>
-    Package:
-    <input name="q" type="search" value="{{ query }}">
-  </label>
-  <button type="submit" class="btn btn-primary">Go!</button>
+  <div class="input-append">
+    <input name="q" type="search" value="{{ query }}" placeholder="Search">
+    <button type="submit" class="btn btn-primary">Go!</button>
+  </div>
 </form>
