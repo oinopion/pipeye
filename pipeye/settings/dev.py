@@ -11,6 +11,8 @@ DATABASES = {
     'default': dj_database_url.parse('postgres:///pipeye')
 }
 
+ALLOWED_HOSTS = ['*']
+
 SECRET_KEY = 'devel'
 
 MIDDLEWARE_CLASSES += (

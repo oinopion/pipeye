@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="row">
+    <div class="span">
+      <h1>Page not found</h1>
+
+      <p class="lead">Someone somewhere made a mistake, because page you were
+        pointed to, does not exists.</p>
+
+      <p>Back to <a href="{% url 'home' %}">home page</a></p>
+    </div>
+  </div>
+{% endblock %}
